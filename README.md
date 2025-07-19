@@ -53,6 +53,6 @@ Para poder usar el bot necesitas:
 Abre tu terminal y ejecuta:
 
 ```bash
-git clone https://github.com/El-brayan502/roxy-md
+git clone https://github.com/El-brayan502/RoxyBot-MD
 cd roxy-md
 npm install
