@@ -1,7 +1,7 @@
 <h1 align="center">🌸 Roxy MD - WhatsApp Bot 🌸</h1>
 
 <p align="center">
-  <img src="https://files.cloudkuimages.guru/images/hYf5B6Ry.jpg" width="220" alt="RoxyBot" />
+  <img src="https://o.uguu.se/ZjztDbCU.gif" width="220" alt="RoxyBot" />
 </p>
 
 <p align="center">
