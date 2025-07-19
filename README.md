@@ -54,7 +54,7 @@ Abre tu terminal y ejecuta:
 
 
 ```bash
-git clone git clone https://github.com/El-brayan502/RoxyBot-MD
+git clone https://github.com/El-brayan502/RoxyBot-MD
 
 ```
 ```bash
