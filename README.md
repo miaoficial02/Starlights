@@ -54,10 +54,6 @@ Abre tu terminal y ejecuta:
 
 
 ```bash
-termux-setup-storage
-```
-
-```bash
 git clone git clone https://github.com/El-brayan502/RoxyBot-MD
 
 ```
