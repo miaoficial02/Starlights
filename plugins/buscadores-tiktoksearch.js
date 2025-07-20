@@ -2,7 +2,7 @@ import axios from 'axios';
 const { proto, generateWAMessageFromContent, prepareWAMessageMedia, generateWAMessageContent, getDevice } = (await import("@whiskeysockets/baileys")).default;
 
 let handler = async (message, { conn, text, usedPrefix, command }) => {
-    if (!text) return conn.reply(message.chat, '☁️ *¿Que quieres buscar en TikTok?*', m, fake)
+    if (!text) return conn.reply(message.chat, '☁️ *¿Que quieres buscar en TikTok?*', message, rcanal);
 
     async function createVideoMessage(url) {
         const { videoMessage } = await generateWAMessageContent({ video: { url } }, { upload: conn.waUploadToServer });
@@ -18,7 +18,7 @@ let handler = async (message, { conn, text, usedPrefix, command }) => {
 
     try {
         await message.react('💜');
-        conn.reply(message.chat, '☁️ *Descargando Su Video...*', m, fake)
+        conn.reply(message.chat, '☁️ *Descargando Su Video...*', message, rcanal);
 
         const { data: response } = await axios.get(`https://delirius-apiofc.vercel.app/search/tiktoksearch?query=${text}`);
         let searchResults = response.meta;
