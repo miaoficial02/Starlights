@@ -13,7 +13,6 @@ import moment from 'moment-timezone'
 global.owner = [
 ['50231458537', '🐔 Creador Batman', true],
 ['573001533523', 'BʀᴀʏᴀɴXD', true],
-['50489513153', 'HN Cʜᴏʟɪᴛᴏ', true],
 ['573133374132', 'Yᴏ Sᴏʏ Yᴏ', true],
 //['numero', 'nombre', true],
 ];
