@@ -1,42 +1,105 @@
-const handler = async (m, { conn, usedPrefix, command }) => {
-  const texto = `
-🌐 *Grupos Oficiales de NyanCatBot-MD* 🚀
+import { join } from 'path'
+const { generateWAMessageContent, generateWAMessageFromContent, proto } = (await import('@whiskeysockets/baileys')).default
 
-✨ Únete a nuestra comunidad, comparte ideas, reporta errores, o simplemente charla con otros usuarios. ¡Eres bienvenido!
+let handler = async (m, { conn }) => {
+  const proses = '✨️ Obteniendo información de los grupos oficiales...'
+  await conn.sendMessage(m.chat, { text: proses }, { quoted: m })
 
-📂 *Lista de grupos:*
-1️⃣  *Soporte General*  
-https://whatsapp.com/channel/0029VajUPbECxoB0cYovo60W
+  // Usar la imagen del thumbnail del bot para evitar errores 404
+  async function createImage() {
+    try {
+      // Fallback directamente a una imagen en línea si no se encuentra la local
+      const { imageMessage } = await generateWAMessageContent({ 
+        image: { url: 'https://files.cloudkuimages.guru/images/YJ8Olr1D.jpg' }  
+      }, {
+        upload: conn.waUploadToServer
+      });
+      return imageMessage;
+    } catch (error) {
+      console.error('Error al cargar la imagen:', error);
+      throw error;
+    }
+  }
+  // Define los grupos oficiales aquí
+  const groups = [
+    {
+      name: 'Grupo Oficial RoxyBot-MD',
+      desc: 'Grupo principal del bot para convivir con la comunidad',
+      buttons: [
+        { name: 'Unirse al Grupo', url: 'https://chat.whatsapp.com/K5NZC4TmRGt4RmSwT3YmLI?mode=ac_t' } // Reemplaza con tu enlace
+      ]
+    },
+    {
+      name: 'Canal de Difusión',
+      desc: 'Recibe todas las novedades y actualizaciones',
+      buttons: [
+        { name: 'Unirse al Canal', url: 'https://whatsapp.com/channel/0029VajUPbECxoB0cYovo60W' } // Reemplaza con tu enlace
+      ]
+    }
+  ]
 
-2️⃣  *Comunidad Oficial*  
-https://whatsapp.com/channel/0029VajUPbECxoB0cYovo60W
+  let cards = []
 
-3️⃣  *Testers & Beta*  
-https://whatsapp.com/channel/0029VajUPbECxoB0cYovo60W
+  // Crear una sola imagen para todos los grupos para evitar errores
+  const imageMsg = await createImage()
 
-⚠️ Respeta las normas de cada grupo. NyanCatBot ama la paz y los arcoíris 🌈
+  // Iterar sobre los grupos para generar las tarjetas
+  for (const group of groups) {
+    const formattedButtons = group.buttons.map(btn => ({
+      name: 'cta_url',
+      buttonParamsJson: JSON.stringify({
+        display_text: btn.name,
+        url: btn.url
+      })
+    }))
 
-─
-📌 Usa *.menu* para ver todos los comandos.
-`
+    cards.push({
+      body: proto.Message.InteractiveMessage.Body.fromObject({
+        text: `🪴 *${group.name}*\n${group.desc}`
+      }),
+      footer: proto.Message.InteractiveMessage.Footer.fromObject({
+        text: '> Si el enlace está anulado, contacta al propietario del bot.'
+      }),
+      header: proto.Message.InteractiveMessage.Header.fromObject({
+        hasMediaAttachment: true,
+        imageMessage: imageMsg
+      }),
+      nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+        buttons: formattedButtons
+      })
+    })
+  }
 
-  await conn.sendMessage(m.chat, {
-    text: texto.trim(),
-    contextInfo: {
-      externalAdReply: {
-        title: "NyanCatBot-MD 🌌",
-        body: "Únete a nuestros grupos oficiales",
-        thumbnailUrl: 'https://i.imgur.com/f8nq8YF.jpg', // Puedes cambiar la imagen
-        sourceUrl: "https://github.com/El-brayan502/NyanCatBot-MD",
-        mediaType: 1,
-        renderLargerThumbnail: true
+  const slideMessage = generateWAMessageFromContent(m.chat, {
+    viewOnceMessage: {
+      message: {
+        messageContextInfo: {
+          deviceListMetadata: {},
+          deviceListMetadataVersion: 2
+        },
+        interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: '⚘️ Grupos Oficiales de Roxy-MD ⚘️'
+          }),
+          footer: proto.Message.InteractiveMessage.Footer.create({
+            text: 'Únete a nuestros grupos oficiales'
+          }),
+          carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({
+            cards
+          })
+        })
       }
     }
-  }, { quoted: m })
+  }, {})
+
+  await conn.relayMessage(m.chat, slideMessage.message, { messageId: slideMessage.key.id })
+  
+  // Reacción con emoji
+  await m.react('✅')
 }
 
 handler.help = ['grupos']
 handler.tags = ['info']
-handler.command = /^grupos$/i
+handler.command = /^(grupos|links|groups|canales|channel)$/i
 
 export default handler
