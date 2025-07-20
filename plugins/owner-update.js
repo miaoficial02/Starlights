@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 
 let handler = async (m, { conn, args }) => { 
     try { 
-        await conn.reply(m.chat, '⚡ Actualizando el bot, por favor espere...', m, rcanal);
+        await conn.reply(m.chat, '✨️ Actualizando el bot, por favor espere...', m, rcanal);
 
         const output = execSync('git pull' + (args.length ? ' ' + args.join(' ') : '')).toString();
         let response = output.includes('Already up to date') 
