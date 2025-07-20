@@ -1,6 +1,6 @@
 var handler = async (m, { conn, participants, usedPrefix, command }) => {
-    const pikachu = 'Ｏ(≧∇≦)Ｏ🧃';
-    const sadchu = 'Ｏ(≧∇≦)Ｏ🧃';
+    const pikachu = '🌸';
+    const sadchu = '✨️';
 
     if (!m.mentionedJid[0] && !m.quoted) {
         return conn.reply(m.chat, `${pikachu} ¡Pika Pika! Debes mencionar a alguien para expulsarlo del grupo.`, m, rcanal);
