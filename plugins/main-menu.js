@@ -89,6 +89,7 @@ let handler = async (m, { conn, usedPrefix, __dirname, participants }) => {
 ┝⎆ [  ${usedPrefix}ʀᴇɢ <ɴᴏᴍʙʀᴇ ᴇᴅᴀᴅ>
 ┝⎆ [  ${usedPrefix}ᴜɴʀᴇɢ
 ┝⎆ [  ${usedPrefix}ᴍᴇɴᴜ
+┝⎆ [  ${usedPrefix}ᴊᴜᴇɢᴏs
 ┝⎆ [  ${usedPrefix}ᴘɪɴɢ
 ┝⎆ [  ${usedPrefix}ɢʀᴜᴘᴏs
 ┝⎆ [  ${usedPrefix}ᴏᴡɴᴇʀ
