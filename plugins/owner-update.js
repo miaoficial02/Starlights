@@ -16,7 +16,7 @@ let handler = async (m, { conn, args }) => {
             const status = execSync('git status --porcelain').toString().trim(); 
             if (status) { 
                 const conflictedFiles = status.split('\n').filter(line => 
-                    !line.includes('pikachuSession/') && 
+                    !line.includes('roxySession/') && 
                     !line.includes('.cache/') && 
                     !line.includes('tmp/')
                 ); 
