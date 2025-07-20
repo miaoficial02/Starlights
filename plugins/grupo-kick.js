@@ -12,11 +12,11 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
     const ownerBot = global.owner[0][0] + '@s.whatsapp.net';
 
     if (user === conn.user.jid) {
-        return conn.reply(m.chat, `${sadchu} ¡Pika! No puedo eliminarme a mí mismo.`, m, rcanal);
+        return conn.reply(m.chat, `${sadchu} ¡roxy! No puedo eliminarme a mí mismo.`, m, rcanal);
     }
 
     if (user === ownerGroup) {
-        return conn.reply(m.chat, `${sadchu} ¡Pikachu no se mete con el líder del grupo!`, m, rcanal);
+        return conn.reply(m.chat, `${sadchu} ¡roxy no se mete con el líder del grupo!`, m, rcanal);
     }
 
     if (user === ownerBot) {
