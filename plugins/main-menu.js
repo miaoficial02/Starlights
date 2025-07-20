@@ -131,6 +131,7 @@ let handler = async (m, { conn, usedPrefix, __dirname, participants }) => {
 ◈┄──━━┉─࿂
 
 ◈───≼ _*BUSCADORES*_ ≽──⊚
+┝⎆ [  ${usedPrefix}ᴘɪɴᴛᴇʀᴇsᴛ
 ┝⎆ [  ${usedPrefix}ᴀᴘᴛᴏɪᴅᴇ<texto>
 ┝⎆ [  ${usedPrefix}ᴛɪᴋᴛᴏᴋsᴇᴀʀᴄʜ
 ┝⎆ [  ${usedPrefix}sꜱᴡᴇʙ
