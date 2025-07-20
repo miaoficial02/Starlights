@@ -344,7 +344,7 @@ if (global.pikaJadibts) {
     if (archivosSubbot.includes('creds.json')) {
       try {
         pikaJadiBot({
-          pathpikaJadiBot: pathSubbot,
+          pathroxyJadiBot: pathSubbot,
           m: null,
           conn,
           args: '',
