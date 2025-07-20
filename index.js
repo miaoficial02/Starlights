@@ -323,7 +323,7 @@ return true
 
 global.rutaJadiBot = join(__dirname, './JadiBots')
 
-if (global.pikaJadibts) {
+if (global.roxyJadibts) {
 
 
   if (!existsSync(global.rutaJadiBot)) {
