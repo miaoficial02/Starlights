@@ -341,8 +341,8 @@ if (global.roxyJadibts) {
 
     if (archivosSubbot.includes('creds.json')) {
       try {
-        pikaJadiBot({
-          pathpikaJadiBot: pathSubbot,
+        roxyJadiBot({
+          pathroxyJadiBot: pathSubbot,
           m: null,
           conn,
           args: '',
