@@ -179,6 +179,8 @@ if (!('antifake' in chat))
 chat.antifake = false
 if (!('delete' in chat))
 chat.delete = false
+if (!('antiarabes' in chat))
+chat.antiarabes = false
 if (!isNumber(chat.expired))
 chat.expired = 0
 } else
@@ -198,6 +200,7 @@ antiBot2: false,
 modoadmin: false,
 antiLink: true,
 antifake: false,
+antiarabes: false,
 reaction: false,
 nsfw: false,
 expired: 0,
