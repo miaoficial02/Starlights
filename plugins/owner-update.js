@@ -26,14 +26,14 @@ let handler = async (m, { conn, args }) => {
                         conflictedFiles.map(f => '• ' + f.slice(3)).join('\n') +
                         `\n\n🔹 Para solucionar esto, reinstala el bot o actualiza manualmente.`;
 
-                    return await conn.reply(m.chat, conflictMsg, m, rcanal); 
+                    return await conn.reply(m.chat, conflictMsg, m, fake); 
                 } 
             } 
         } catch (statusError) { 
             console.error(statusError); 
         }
 
-        await conn.reply(m.chat, `❌ Error al actualizar: ${error.message || 'Error desconocido.'}`, m, rcanal);
+        await conn.reply(m.chat, `❌ Error al actualizar: ${error.message || 'Error desconocido.'}`, m, fake);
     } 
 };
 
