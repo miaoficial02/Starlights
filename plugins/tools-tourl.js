@@ -60,7 +60,7 @@ let handler = async (m, { conn }) => {
 
 handler.help = ['tourl']
 handler.tags = ['tools']
-handler.command = /^(tourl|url)$/i
+handler.command = ['tóurl', 'url', 'tourl']
 handler.limit = true
 handler.register = true
 
