@@ -63,6 +63,6 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 
 handler.help = ['hd']
 handler.tags = ['tools', 'imagen']
-handler.command = /^hd$/i
+handler.command = ['mejorar', 'hd'];
 
 export default handler
