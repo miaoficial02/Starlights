@@ -65,7 +65,7 @@ export async function before(m, { conn }) {
           description: null,
           previewType: "PHOTO",
           thumbnailUrl: 'https://files.cloudkuimages.guru/images/HUmjMRt8.jpg',
-          sourceUrl: 'https://www.instagram.com/xrljose/',
+          sourceUrl: 'https://github.com/El-brayan502/RoxyBot-MD/',
           mediaType: 1,
           renderLargerThumbnail: true
         }
@@ -99,7 +99,7 @@ export async function before(m, { conn }) {
               title: 'DevBrayan',
               body: '🌸◌*̥₊ Rᴏxʏ-Mᴅ ◌❐🎋༉',
               thumbnailUrl: 'https://files.cloudkuimages.guru/images/HUmjMRt8.jpg',
-              sourceUrl: 'https://www.instagram.com/xrljose/',
+              sourceUrl: 'https://github.com/El-brayan502/RoxyBot-MD/',
               mediaType: 1,
               renderLargerThumbnail: true
             }
@@ -126,7 +126,7 @@ export async function before(m, { conn }) {
             title: 'DevBrayan',
             body: '🌸◌*̥₊ Rᴏxʏ-Mᴅ ◌❐🎋༉',
             thumbnailUrl: 'https://files.cloudkuimages.guru/images/HUmjMRt8.jpg',
-            sourceUrl: 'https://www.instagram.com/xrljose/',
+            sourceUrl: 'https://github.com/El-brayan502/RoxyBot-MD/',
             mediaType: 1,
             renderLargerThumbnail: true
           }
