@@ -10,13 +10,13 @@ let usuario = `@${m.sender.split`@`[0]}`
 let pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || 'https://files.catbox.moe/xr2m6u.jpg'
 
 let nombre, foto, edit, newlink, status, admingp, noadmingp
-nombre = `《✦》${usuario} Ha cambiado el nombre del grupo.\n\n> ✧ Ahora el grupo se llama:\n> *${m.messageStubParameters && m.messageStubParameters[0] ? m.messageStubParameters[0] : 'Nombre no disponible'}*.`
-foto = `《✦》Se ha cambiado la imagen del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
-edit = `《✦》${usuario} Ha permitido que ${m.messageStubParameters && m.messageStubParameters[0] ? (m.messageStubParameters[0] == 'on' ? 'solo admins' : 'todos') : 'desconocido'} puedan configurar el grupo.`
-newlink = `《✦》El enlace del grupo ha sido restablecido.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
-status = `《✦》El grupo ha sido ${m.messageStubParameters && m.messageStubParameters[0] ? (m.messageStubParameters[0] == 'on' ? '*cerrado*' : '*abierto*') : 'modificado'} Por ${usuario}\n\n> ✧ Ahora ${m.messageStubParameters && m.messageStubParameters[0] ? (m.messageStubParameters[0] == 'on' ? '*solo admins*' : '*todos*') : 'estado desconocido'} pueden enviar mensaje.`
-admingp = `《✦》${m.messageStubParameters && m.messageStubParameters[0] ? `@${m.messageStubParameters[0].split`@`[0]}` : 'Alguien'} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
-noadmingp =  `《✦》${m.messageStubParameters && m.messageStubParameters[0] ? `@${m.messageStubParameters[0].split`@`[0]}` : 'Alguien'} Deja de ser admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
+nombre = `✨️ ${usuario} Ha cambiado el nombre del grupo.\n\n> ✧ Ahora el grupo se llama:\n> *${m.messageStubParameters && m.messageStubParameters[0] ? m.messageStubParameters[0] : 'Nombre no disponible'}*.`
+foto = `✨️ Se ha cambiado la imagen del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
+edit = `✨️ ${usuario} Ha permitido que ${m.messageStubParameters && m.messageStubParameters[0] ? (m.messageStubParameters[0] == 'on' ? 'solo admins' : 'todos') : 'desconocido'} puedan configurar el grupo.`
+newlink = `✨️ El enlace del grupo ha sido restablecido.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
+status = `✨️ El grupo ha sido ${m.messageStubParameters && m.messageStubParameters[0] ? (m.messageStubParameters[0] == 'on' ? '*cerrado*' : '*abierto*') : 'modificado'} Por ${usuario}\n\n> ✧ Ahora ${m.messageStubParameters && m.messageStubParameters[0] ? (m.messageStubParameters[0] == 'on' ? '*solo admins*' : '*todos*') : 'estado desconocido'} pueden enviar mensaje.`
+admingp = `✨️ ${m.messageStubParameters && m.messageStubParameters[0] ? `@${m.messageStubParameters[0].split`@`[0]}` : 'Alguien'} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
+noadmingp =  `✨️ ${m.messageStubParameters && m.messageStubParameters[0] ? `@${m.messageStubParameters[0].split`@`[0]}` : 'Alguien'} Deja de ser admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
   
 if (chat.detect && m.messageStubType == 21) {
 await conn.sendMessage(m.chat, { text: nombre, mentions: [m.sender] }, { quoted: fkontak })   
@@ -37,14 +37,14 @@ await conn.sendMessage(m.chat, { text: status, mentions: [m.sender] }, { quoted:
 if (m.messageStubParameters && m.messageStubParameters[0]) {
   await conn.sendMessage(m.chat, { text: admingp, mentions: [`${m.sender}`,`${m.messageStubParameters[0]}`] }, { quoted: fkontak })
 } else {
-  await conn.sendMessage(m.chat, { text: `《✦》Alguien ha sido promovido a admin.\n\n> ✧ Acción hecha por:\n> » ${usuario}`, mentions: [m.sender] }, { quoted: fkontak })
+  await conn.sendMessage(m.chat, { text: `✨️ alguien ha sido promovido a admin.\n\n> ✧ Acción hecha por:\n> » ${usuario}`, mentions: [m.sender] }, { quoted: fkontak })
 }
 
 } if (chat.detect && m.messageStubType == 30) {
 if (m.messageStubParameters && m.messageStubParameters[0]) {
   await conn.sendMessage(m.chat, { text: noadmingp, mentions: [`${m.sender}`,`${m.messageStubParameters[0]}`] }, { quoted: fkontak })
 } else {
-  await conn.sendMessage(m.chat, { text: `《✦》Alguien ha dejado de ser admin.\n\n> ✧ Acción hecha por:\n> » ${usuario}`, mentions: [m.sender] }, { quoted: fkontak })
+  await conn.sendMessage(m.chat, { text: `✨️ Alguien ha dejado de ser admin.\n\n> ✧ Acción hecha por:\n> » ${usuario}`, mentions: [m.sender] }, { quoted: fkontak })
 }
 } else {
 if (m.messageStubType == 2) return
