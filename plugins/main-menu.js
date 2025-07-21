@@ -139,9 +139,10 @@ let handler = async (m, { conn, usedPrefix, __dirname, participants }) => {
 ┝⎆ [  ${usedPrefix}sꜱᴡᴇʙ
 ┝⎆ [  ${usedPrefix}sᴘᴏᴛɪꜰʏ
 ◈┄──━━┉─࿂
-
 ◈───≼ _*GRUPO*_ ≽──⊚
 ┝⎆ [  ${usedPrefix}ᴘᴇʀғɪʟ
+┝⎆ [  ${usedPrefix}ɢʀᴜᴘᴏ ᴄᴇʀʀᴀʀ
+┝⎆ [  ${usedPrefix}ɢʀᴜᴘᴏᴀʙʀɪʀ
 ┝⎆ [  ${usedPrefix}ɪɴᴠᴏᴄᴀʀ 
 ┝⎆ [  ${usedPrefix}sᴇᴛᴘᴘɢʀᴜᴘᴏ 
 ┝⎆ [  ${usedPrefix}ᴋɪᴄᴋ <@tag>
