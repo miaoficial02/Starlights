@@ -36,7 +36,7 @@ const handler = async (m, { text, command, conn }) => {
   })
 }
 
-handler.command = /^(verificar|reg)$/i
+handler.command = ['verificar', 'reg'];
 handler.help = ['verificar', 'reg']
 handler.tags = ['main']
 handler.register = false
