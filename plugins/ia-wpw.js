@@ -84,7 +84,7 @@ ${e.message || 'Este comando tiene problemas, intenta más tarde 😅'}`
 
 yeon.help = ['wpw <filtro>', 'penghitaman <filtro>']
 yeon.tags = ['ai']
-yeon.command = /^(wpw|penghitaman)$/i
+yeon.command = ['wpw', 'penghitaman', 'wp']
 yeon.register = true
 yeon.limit = true
 export default yeon
