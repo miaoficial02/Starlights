@@ -39,7 +39,7 @@ let handler = async (m, { conn }) => {
   }, { quoted: m })
 }
 
-handler.command = /^unreg$/i
+handler.command = ['únreg', 'unreg'];
 handler.register = true
 
 export default handler
