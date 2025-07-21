@@ -108,7 +108,7 @@ Ejemplo: *${usedPrefix + command}* https://vt.tiktok.com/abcd/`
 
 yeon.help = ['tiktokdl <url>']
 yeon.tags = ['downloader']
-yeon.command = /^(tiktokdl|ttdl|tt|tiktok|dltiktok|dltt|tiktokdownload|ttdownload|downloadtiktok|downloadtt)$/i
+yeon.command = ['tiktok', 'ttdl', 'tt']
 yeon.register = true
 yeon.limit = true
 
