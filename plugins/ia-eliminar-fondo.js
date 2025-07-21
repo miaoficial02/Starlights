@@ -66,7 +66,7 @@ Esta función está teniendo problemas, intenta de nuevo más tarde 😅`
 
 yeon.help = ['bgremover <responder a imagen>'];
 yeon.tags = ['ai'];
-yeon.command = /^bgremover$/i;
+yeon.command = ['bgremover', 'bg', 'bgremóver']
 yeon.register = true;
 yeon.limit = true;
 
