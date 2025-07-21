@@ -26,7 +26,7 @@ let handler = async (m, { conn, text }) => {
 };
 
 handler.help = ['ia'];
-handler.command = /^(ia|roxy)$/i;
+handler.command = ['roxy', 'roxiai', 'iaroxy']
 handler.tags = ['ai'];
 handler.limit = true;
 handler.register = true;
