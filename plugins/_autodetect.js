@@ -10,7 +10,7 @@ let usuario = `@${m.sender.split`@`[0]}`
 let pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || 'https://files.catbox.moe/xr2m6u.jpg'
 
 let nombre, foto, edit, newlink, status, admingp, noadmingp
-nombre = `✨️ ${usuario} Ha cambiado el nombre del grupo.\n\n> ✧ Ahora el grupo se llama:\n> *${m.messageStubParameters && m.messageStubParameters[0] ? m.messageStubParameters[0] : 'Nombre no disponible'}*.`
+nombre = `*✨️ ${usuario} Ha cambiado el nombre del grupo.*\n\n> ✧ Ahora el grupo se llama:\n> *${m.messageStubParameters && m.messageStubParameters[0] ? m.messageStubParameters[0] : 'Nombre no disponible'}*.`
 foto = `✨️ Se ha cambiado la imagen del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
 edit = `✨️ ${usuario} Ha permitido que ${m.messageStubParameters && m.messageStubParameters[0] ? (m.messageStubParameters[0] == 'on' ? 'solo admins' : 'todos') : 'desconocido'} puedan configurar el grupo.`
 newlink = `✨️ El enlace del grupo ha sido restablecido.\n\n> ✧ Acción hecha por:\n> » ${usuario}`
