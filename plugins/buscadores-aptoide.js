@@ -51,7 +51,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 
 handler.help = ['aptoide']
 handler.tags = ['buscador']
-handler.command = /^aptoide$/i
+handler.command = ['apk', 'aptoide', 'afk']
 handler.limit = true
 handler.register = true
 
