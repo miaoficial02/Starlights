@@ -9,7 +9,7 @@ let handler = async (m, { conn, args }) => {
             ? '✨️ El bot ya está actualizado.' 
             : `✨️ Se han aplicado actualizaciones:\n\n${output}`;
 
-        await conn.reply(m.chat, response, m, rcanal);
+        await conn.reply(m.chat, response, m, fake);
 
     } catch (error) { 
         try { 
