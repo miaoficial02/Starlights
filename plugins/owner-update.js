@@ -2,12 +2,12 @@ import { execSync } from 'child_process';
 
 let handler = async (m, { conn, args }) => { 
     try { 
-        //await conn.reply(m.chat, '👑 Actualizando el bot, por favor espere...', m, rcanal);
+        await conn.reply(m.chat, '✨️ Actualizando el bot, por favor espere...', m, fake)
 
         const output = execSync('git pull' + (args.length ? ' ' + args.join(' ') : '')).toString();
         let response = output.includes('Already up to date') 
-            ? '👑 El bot ya está actualizado.' 
-            : `🔥 Se han aplicado actualizaciones:\n\n${output}`;
+            ? '✨️ El bot ya está actualizado.' 
+            : `✨️ Se han aplicado actualizaciones:\n\n${output}`;
 
         await conn.reply(m.chat, response, m, rcanal);
 
@@ -16,7 +16,7 @@ let handler = async (m, { conn, args }) => {
             const status = execSync('git status --porcelain').toString().trim(); 
             if (status) { 
                 const conflictedFiles = status.split('\n').filter(line => 
-                    !line.includes('kiritoSession/') && 
+                    !line.includes('roxySession/') && 
                     !line.includes('.cache/') && 
                     !line.includes('tmp/')
                 ); 
@@ -38,8 +38,8 @@ let handler = async (m, { conn, args }) => {
 };
 
 handler.help = ['update', 'actualizar'];
-handler.tags = ['owner']
-handler.command = ['up', 'update', 'actualizar'];
+handler.command = ['update', 'actualizar']
+handler.tags = ['owner'];
 handler.rowner = true;
 
 export default handler;
