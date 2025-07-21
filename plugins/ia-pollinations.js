@@ -71,7 +71,7 @@ async function pollinations(prompt) {
 
 yeon.help = ['pollinations <prompt>'];
 yeon.tags = ['ai'];
-yeon.command = /^pollinations$/i;
+yeon.command = ['pollinations', 'aipoli', 'img']
 yeon.register = true;
 yeon.limit = true;
 
