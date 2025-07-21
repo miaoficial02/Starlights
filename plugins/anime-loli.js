@@ -18,7 +18,7 @@ let handler = async (m, { conn }) => {
 }
 
 handler.help = ['loli']
-handler.command = /^(loli)$/i
+handler.command = ['loli', 'loolis', 'loly']
 handler.tags = ['random']
 handler.limit = true
 handler.register = true
