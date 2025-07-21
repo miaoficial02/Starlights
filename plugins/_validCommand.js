@@ -5,7 +5,7 @@ export async function before(m, { conn }) {
     const Buffer = global.Buffer || ((...args) => new Uint8Array(...args));
     
     const channelRD = global.channelRD || { id: '120363312092804854@newsletter', name: 'Oficial channel roxy' };
-    const metanombre = global.metanombre || 'Meta Ai';
+    const metanombre = global.metanombre || 'DevBrayan';
 
     if (!Array.prototype.getRandom) {
       Array.prototype.getRandom = function () {
@@ -38,7 +38,7 @@ export async function before(m, { conn }) {
       },
       message: {
         contactMessage: {
-          displayName: 'Meta Ai',
+          displayName: 'DevBrayan',
           vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:Meta AI\nORG:Meta AI\nTEL;type=CELL;type=VOICE;waid=50231458537:+502 3145 8537\nEND:VCARD`,
           jpegThumbnail: Buffer.from([]),
           contextInfo: {
