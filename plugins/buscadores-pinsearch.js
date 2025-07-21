@@ -50,6 +50,6 @@ const handler = async (m, { conn, text }) => {
 handler.help = ['pinterest <término>'];
 handler.tags = ['img'];
 handler.register = true;
-handler.command = /^(pinterest|pinterestsearch)$/i;
+handler.command = ['pinterestsearch', 'pinterest', 'pín']
 
 export default handler;
