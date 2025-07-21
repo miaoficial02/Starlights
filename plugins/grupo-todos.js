@@ -1,40 +1,49 @@
-import moment from 'moment-timezone'
+const handler = async (m, { conn, participants, isAdmin, isBotAdmin, command }) => {
+  if (!m.isGroup) return m.reply('❗ Este comando solo se puede usar en grupos.')
+  if (!isAdmin) return m.reply('🛡️ Solo los administradores pueden usar este comando.')
 
-const banderas = {
-  '91': '🇮🇳', '55': '🇧🇷', '34': '🇪🇸', '52': '🇲🇽', '1': '🇺🇸',
-  '57': '🇨🇴', '51': '🇵🇪', '593': '🇪🇨', '502': '🇬🇹', '54': '🇦🇷',
-  '595': '🇵🇾', '56': '🇨🇱', '58': '🇻🇪', '591': '🇧🇴', '505': '🇳🇮',
-  '504': '🇭🇳', '503': '🇸🇻', '507': '🇵🇦', '592': '🇬🇾', '53': '🇨🇺',
-  '998': '🇺🇿', '60': '🇲🇾', '62': '🇮🇩', '81': '🇯🇵', '82': '🇰🇷',
-  '237': '🇨🇲', '234': '🇳🇬', '27': '🇿🇦', '66': '🇹🇭', '84': '🇻🇳',
-  '91': '🇮🇳', '86': '🇨🇳'
-}
-
-let handler = async (m, { conn, participants, args }) => {
-  if (!m.isGroup) return m.reply('❌ Este comando solo se puede usar en grupos.')
-
-  let texto = args.length > 0 ? args.join(' ') : '📣 *Atención a todos los miembros:*'
-  let mensaje = `${texto}\n\n`
-
-  const mentions = []
-  for (let p of participants) {
-    const numero = p.id.split('@')[0]
-    const codigo = numero.length > 5 ? numero.slice(0, numero.length - 7) : '1' // fallback
-
-    const bandera = banderas[codigo] || '🌐'
-    mensaje += `🔔 ${bandera} @${numero}\n`
-    mentions.push(p.id)
+  const countryFlags = {
+    '502': '🇬🇹', // Guatemala
+    '503': '🇸🇻', // El Salvador
+    '504': '🇭🇳', // Honduras
+    '505': '🇳🇮', // Nicaragua
+    '506': '🇨🇷', // Costa Rica
+    '507': '🇵🇦', // Panamá
+    '51': '🇵🇪',  // Perú
+    '52': '🇲🇽',  // México
+    '54': '🇦🇷',  // Argentina
+    '55': '🇧🇷',  // Brasil
+    '56': '🇨🇱',  // Chile
+    '57': '🇨🇴',  // Colombia
+    '58': '🇻🇪',  // Venezuela
+    '1': '🇺🇸',   // USA
+    '34': '🇪🇸',  // España
+    '91': '🇮🇳',  // India
+    '93': '🇦🇫',  // Afganistán
+    '212': '🇲🇦', // Marruecos
+    '355': '🇦🇱', // Albania
+    '84': '🇻🇳',  // Vietnam
+    '976': '🇲🇳', // Mongolia
+    '94': '🇱🇰'   // Sri Lanka
   }
 
-  await conn.sendMessage(m.chat, {
-    text: mensaje,
-    mentions
-  }, { quoted: m })
+  let text = '👥 *Invocando a todos los miembros:*\n\n'
+  let mentions = []
+
+  for (let user of participants) {
+    const number = user.id.split('@')[0]
+    const prefix = number.length > 5 ? number.slice(0, number.length - 7) : number
+    const flag = countryFlags[prefix] || '🏳️'
+    text += `${flag} @${number}\n`
+    mentions.push(user.id)
+  }
+
+  await conn.sendMessage(m.chat, { text, mentions }, { quoted: m })
 }
 
-handler.command = ['invocar', 'todxs', 'tod@s']
+handler.help = ['invocar', 'todos']
+handler.tags = ['grupo']
+handler.command = ['invocar', 'todos']
 handler.group = true
-handler.tags = ['group']
-handler.help = ['invocar', 'todos', 'tod@s']
 
 export default handler
