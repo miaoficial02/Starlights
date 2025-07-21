@@ -100,6 +100,6 @@ let handler = async (m, { conn }) => {
 
 handler.help = ['grupos']
 handler.tags = ['info']
-handler.command = /^(grupos|links|groups|canales|channel)$/i
+handler.command = ['grupos', 'links', 'canal']
 
 export default handler
