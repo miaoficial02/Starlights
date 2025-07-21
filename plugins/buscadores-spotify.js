@@ -59,6 +59,6 @@ const handler = async (m, { args, conn, command, prefix }) => {
 // Información de ayuda del comando
 handler.help = ['sspotify <nombre de la canción>'];
 handler.tags = ['busqueda'];
-handler.command = /^sspotify$/i;
+handler.command = ['spotify', 'sspotify', 'spotiti']
 
 export default handler;
