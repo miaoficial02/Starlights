@@ -86,6 +86,6 @@ let handler = async (m, { conn }) => {
 
 handler.help = ['perfil', 'verperfil']
 handler.tags = ['info']
-handler.command = /^(perfil|verperfil)$/i
+handler.command = ['perfil', 'verperfil', 'profile']
 
 export default handler
