@@ -174,7 +174,7 @@ async function obtenerDetalleAnime(url) {
 
 yeon.help = ['nimegamesearch <título>', 'nimegamedetail <url>'];
 yeon.tags = ['buscar', 'internet'];
-handler.command = ['nimegamesearch', 'nimegamedetail'];
+yeon.command = ['nimegamesearch', 'animesearch'];
 yeon.register = true;
 yeon.limit = false;
 
