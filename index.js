@@ -1,5 +1,6 @@
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
 import './config.js'
+//import { iniciarMemeAutomatico } from './plugins/_prueba.js';
 import { setupMaster, fork } from 'cluster'
 import { watchFile, unwatchFile } from 'fs'
 import cfonts from 'cfonts'
@@ -18,7 +19,6 @@ import {format} from 'util'
 import boxen from 'boxen'
 import P from 'pino'
 import pino from 'pino'
-import qrcode from 'qrcode'
 import Pino from 'pino'
 import path, { join, dirname } from 'path'
 import {Boom} from '@hapi/boom'
@@ -43,7 +43,7 @@ let { say } = cfonts
 
 console.log(
     boxen(
-        chalk.bold.magentaBright('\n SE ESTA INICIANDO ROXYBOT-MD \n'),
+        chalk.bold.magentaBright('\n ＩＮＩＣＩＡＮＤＯ ＲＯＸＹ \n'),
         {
             padding: 1,
             margin: 1,
@@ -168,11 +168,12 @@ console.debug = () => {}
 
 const connectionOptions = {
 logger: pino({ level: 'silent' }),
-mobile: MethodMobile,
-browser: opcion == '1' ? [`${nameqr}`, 'Chrome', '120.0.0.0'] : methodCodeQR ? [`${nameqr}`, 'Chrome', '120.0.0.0'] : ['Chrome', '120.0.0.0'],
+printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
+mobile: MethodMobile, 
+browser: opcion == '1' ? [`${nameqr}`, 'Edge', '20.0.04'] : methodCodeQR ? [`${nameqr}`, 'Edge', '20.0.04'] : ['Ubuntu', 'Edge', '110.0.1587.56'],
 auth: {
 creds: state.creds,
-keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "silent" }).child({ level: "silent" })),
+keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
 },
 markOnlineOnConnect: true, 
 generateHighQualityLinkPreview: true, 
@@ -237,13 +238,10 @@ await global.reloadHandler(true).catch(console.error);
 global.timestamp.connect = new Date;
 }
 if (global.db.data == null) loadDatabase();
-if (update.qr) {
+if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
 if (opcion == '1' || methodCodeQR) {
-console.log(chalk.bold.yellow(`\n❐ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS`))
-const qr = await import('qrcode')
-const QR = await qr.toString(update.qr, { type: 'terminal', small: true })
-console.log(QR)
-}}
+console.log(chalk.bold.yellow(`\n❐ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS`))}
+}
 if (connection == 'open') {
   console.log(chalk.bold.green('\n✨️ Roxy-bot Conectada con éxito 🌸'))
 }
@@ -401,85 +399,6 @@ global.plugins = Object.fromEntries(Object.entries(global.plugins).sort(([a], [b
 Object.freeze(global.reload)
 watch(pluginFolder, global.reload)
 await global.reloadHandler()
-
-
-const originalProcessStdoutWrite = process.stdout.write;
-const originalProcessStderrWrite = process.stderr.write;
-
-process.stdout.write = function(string, encoding, fd) {
-    if (typeof string === 'string') {
-        const lowerString = string.toLowerCase();
-        const shouldFilter = [
-            'closing stale open session',
-            'prekey bundle',
-            'failed to decrypt',
-            'bad mac',
-            'session error',
-            'stale session',
-            'outgoing prekey'
-        ].some(filter => lowerString.includes(filter));
-        
-        if (shouldFilter) {
-            return true;
-        }
-    }
-    return originalProcessStdoutWrite.apply(process.stdout, arguments);
-};
-
-
-const messagesToFilter = [
-    'Failed to decrypt message with any known session',
-    'Bad MAC',
-    'Closing stale open session for new outgoing prekey bundle',
-    'Closing stale open session',
-    'prekey bundle',
-    'Session error',
-    'Decrypted message',
-    'stale open session',
-    'outgoing prekey',
-    'prekey',
-    'stale session',
-    'open session',
-    'session for new'
-];
-
-function shouldFilterMessage(message) {
-    if (typeof message !== 'string') return false;
-    return messagesToFilter.some(filter => 
-        message.toLowerCase().includes(filter.toLowerCase())
-    );
-}
-
-
-const originalConsoleError = console.error;
-console.error = function (...args) {
-    const msg = args.join(' ');
-    if (shouldFilterMessage(msg)) {
-        return; 
-    }
-    originalConsoleError.apply(console, args);
-};
-
-
-const originalConsoleLog = console.log;
-console.log = function (...args) {
-    const msg = args.join(' ');
-    if (shouldFilterMessage(msg)) {
-        return; 
-    }
-    originalConsoleLog.apply(console, args);
-};
-
-
-const originalConsoleWarn = console.warn;
-console.warn = function (...args) {
-    const msg = args.join(' ');
-    if (shouldFilterMessage(msg)) {
-        return; 
-    }
-    originalConsoleWarn.apply(console, args);
-};
-
 async function _quickTest() {
 const test = await Promise.all([
 spawn('ffmpeg'),
