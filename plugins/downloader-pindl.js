@@ -48,7 +48,7 @@ const handler = async (m, { conn, text, command }) => {
 
 handler.help = ['pindl <url>']
 handler.tags = ['descargas']
-handler.command = /^pindl$/i
+handler.command = ['pindl', 'pinterestdl', 'píndl']
 
 export default handler
 
