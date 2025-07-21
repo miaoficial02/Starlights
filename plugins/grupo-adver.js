@@ -1,52 +1,55 @@
-const warnings = global.db.data.warnings = global.db.data.warnings || {}
-import fetch from 'node-fetch'
+const handler = async (m, { conn, text, usedPrefix, command, participants, groupMetadata, isAdmin, isBotAdmin }) => {
+  if (!m.isGroup) return m.reply('✦ Este comando solo se puede usar en grupos.')
+  if (!isAdmin) return m.reply('✦ Solo los administradores pueden usar este comando.')
 
-let handler = async (m, { conn, args, usedPrefix, command, participants, isAdmin, isGroup, isBotAdmin }) => {
-  if (!isGroup) return m.reply('❗ Este comando solo funciona en grupos.')
-  if (!isAdmin) return m.reply('🚫 Solo los administradores pueden usar este comando.')
+  const user = m.mentionedJid?.[0]
+  const mensaje = text.split(" ").slice(1).join(" ")
 
-  let user = m.mentionedJid?.[0] || (args[0]?.includes('@') ? args[0].replace(/[@+]/g, '') + '@s.whatsapp.net' : null)
-  if (!user) return m.reply(`⚠️ Debes mencionar al usuario o escribir su número.\n\nEjemplo:\n${usedPrefix + command} @usuario`)
+  if (!user) return m.reply(`✦ Debes mencionar a alguien.\nEjemplo: *${usedPrefix}${command} @usuario razón*`)
+  if (!mensaje) return m.reply('✦ Debes escribir el motivo de la advertencia.')
 
-  warnings[user] = warnings[user] || { count: 0 }
-  warnings[user].count++
+  const date = new Date().toLocaleDateString('es-ES')
+  const groupName = groupMetadata.subject
+  const senderName = await conn.getName(m.sender)
 
-  let profile
-  try {
-    profile = await conn.profilePictureUrl(user, 'image')
-  } catch (e) {
-    profile = 'https://files.cloudkuimages.guru/images/7kAcwery.jpg'
+  const advertenciaTexto = `⚠️ *ADVERTENCIA RECIBIDA* ⚠️
+
+🔰 *Grupo:* ${groupName}
+👮‍♂️ *Moderador:* ${senderName}
+📅 *Fecha:* ${date}
+
+📝 *Mensaje:*
+${mensaje}
+
+❗Por favor, evita futuras faltas.`
+
+  const imagen = 'https://files.cloudkuimages.guru/images/7kAcwery.jpg' // Imagen personalizada
+
+  const preview = {
+    contextInfo: {
+      externalAdReply: {
+        title: '⚠️ Advertencia oficial',
+        body: 'Has recibido una advertencia del grupo',
+        thumbnailUrl: imagen,
+        mediaType: 1,
+        renderLargerThumbnail: true,
+        showAdAttribution: false,
+        sourceUrl: 'https://whatsapp.com' // Puedes poner un link personalizado si quieres
+      }
+    }
   }
 
-  let name = await conn.getName(user)
-  let warnCount = warnings[user].count
-
-  let advertText = `🚫 *ADVERTENCIA EMITIDA*\n\n👤 Usuario: @${user.split('@')[0]}\n📄 Nombre: ${name}\n⚠️ Advertencias: ${warnCount}/3\n\n✳️ Evita romper las reglas del grupo o podrías ser sancionado.`
-
-  // Enviar advertencia por privado
-  await conn.sendMessage(user, {
-    image: { url: profile },
-    caption: advertText,
-    mentions: [user]
-  })
-
-  // Avisar en grupo que se envió la advertencia
-  await conn.sendMessage(m.chat, {
-    text: `📩 Se ha enviado una advertencia por privado a @${user.split('@')[0]}`,
-    mentions: [user]
-  }, { quoted: m })
-
-  if (warnCount >= 3) {
-    await conn.sendMessage(m.chat, {
-      text: `🚷 *@${user.split('@')[0]} ha recibido 3 advertencias.*\nPuedes decidir si expulsarlo.`,
-      mentions: [user]
-    }, { quoted: m })
+  try {
+    await conn.sendMessage(user, { text: advertenciaTexto }, { quoted: m, ...preview })
+    await m.reply('✅ Advertencia enviada por privado correctamente.')
+  } catch (e) {
+    await m.reply('❌ No se pudo enviar la advertencia. Es posible que el usuario no tenga el chat abierto con el bot.')
   }
 }
 
-handler.command = ['daradvertencia', 'advertencia', 'ad']
+handler.command = ['advertencia', 'ad', 'daradvertencia']
+handler.tags = ['grupo']
 handler.group = true
 handler.admin = true
-handler.register = true
 
 export default handler
