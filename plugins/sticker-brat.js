@@ -1,73 +1,57 @@
-import { sticker } from '../lib/sticker.js';
-import axios from 'axios';
+import { sticker } from '../lib/sticker.js'
+import axios from 'axios' 
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 const fetchSticker = async (text, attempt = 1) => {
     try {
-        const response = await axios.get(`https://kepolu-brat.hf.space/brat`, {
-            params: { q: text },
+        const response = await axios.get(`https://api.hanggts.xyz/imagecreator/brat`, {
+            params: { text },
             responseType: 'arraybuffer',
-        });
-        return response.data;
+        })
+        return response.data
     } catch (error) {
         if (error.response?.status === 429 && attempt <= 3) {
-            const retryAfter = parseInt(error.response.headers['retry-after'] || '5');
-            await delay(retryAfter * 1000);
-            return fetchSticker(text, attempt + 1);
+            const retryAfter = error.response.headers['retry-after'] || 5
+            await delay(retryAfter * 1000)
+            return fetchSticker(text, attempt + 1)
         }
-        throw error;
+        throw error
     }
-};
+}
 
-let handler = async (m, { conn, text, command, usedPrefix }) => {
-    if (!text) {
-        return conn.reply(m.chat, `${emojis} *Uso incorrecto del comando.*\n\n*Ejemplo:*  ${usedPrefix + command} ${botname}`, m, rcanal);
+let handler = async (m, { conn, text }) => {
+    if (m.quoted && m.quoted.text) {
+        text = m.quoted.text
+    } else if (!text) {
+        return conn.sendMessage(m.chat, {
+            text: `❀ Por favor, responde a un mensaje o ingresa un texto para crear el Sticker.`,
+        }, { quoted: m })
     }
 
     try {
-        const buffer = await fetchSticker(text);
-        const stiker = await sticker(buffer, false, botname, nombre);
+        const buffer = await fetchSticker(text)
+        let userId = m.sender
+        let packstickers = global.db.data.users[userId] || {}
+        let texto1 = packstickers.text1 || global.packsticker
+        let texto2 = packstickers.text2 || global.packsticker2
+
+        let stiker = await sticker(buffer, false, texto1, texto2)
 
         if (stiker) {
-            await conn.sendFile(
-                m.chat,
-                stiker,
-                'sticker.webp',
-                ``,
-                m,
-                true,
-                {
-                    contextInfo: {
-                        forwardingScore: 200,
-                        isForwarded: false,
-                        externalAdReply: {
-                            showAdAttribution: false,
-                            title: packname,
-                            body: `${botname}`,
-                            mediaType: 2,
-                            sourceUrl: redes,
-                            thumbnail: catalogo
-                        }
-                    }
-                },
-                { quoted: m }
-            );
+            return conn.sendFile(m.chat, stiker, 'sticker.webp', '', m)
         } else {
-            throw new Error("No se pudo generar el sticker.");
+            throw new Error("✧ No se pudo generar el sticker.")
         }
     } catch (error) {
-        console.error(error);
-        return conn.sendMessage(
-            m.chat,
-            { text: `${msm} *Ocurrió un error:* ${error.message}` },
-            { quoted: m }
-        );
+        return conn.sendMessage(m.chat, {
+            text: `⚠︎ Ocurrió un error: ${error.message}`,
+        }, { quoted: m })
     }
-};
+}
 
-handler.command = ['brat'];
-handler.tags = ['sticker'];
-handler.help = ['brat *<texto>*'];
+handler.command = ['brat']
+handler.tags = ['sticker']
+handler.help = ['brat *<texto>*']
 
-export default handler;
+export default handler
