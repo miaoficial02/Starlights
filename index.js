@@ -1,5 +1,6 @@
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
 import './config.js'
+//import { iniciarMemeAutomatico } from './plugins/_prueba.js';
 import { setupMaster, fork } from 'cluster'
 import { watchFile, unwatchFile } from 'fs'
 import cfonts from 'cfonts'
@@ -103,7 +104,7 @@ global.timestamp = {start: new Date}
 const __dirname = global.__dirname(import.meta.url)
 
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
-global.prefix = new RegExp('^[#/!.]')
+global.prefix = new RegExp('^[#/!✨️.🌸]')
 // global.opts['db'] = process.env['db']
 
 global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('./src/database/database.json'))
@@ -155,10 +156,10 @@ opcion = '1'
 }
 if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
 do {
-opcion = await question(colores('₪ Elija una opción:\n') + opcionQR('1. Con código QR\n') + opcionTexto('2. Con código de texto de 8 dígitos\n--> '))
+opcion = await question(colores('🌸 Seleccione una opción:\n') + opcionQR('1. Con código QR\n') + opcionTexto('2. Con código de texto de 8 dígitos\n--> '))
 
 if (!/^[1-2]$/.test(opcion)) {
-console.log(chalk.bold.redBright(`☞ No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales.`))
+console.log(chalk.bold.redBright(`🌸 No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales.`))
 }} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${sessions}/creds.json`))
 } 
 
@@ -198,7 +199,7 @@ if (!!phoneNumber) {
 addNumber = phoneNumber.replace(/[^0-9]/g, '')
 } else {
 do {
-phoneNumber = await question(chalk.bgBlack(chalk.bold.greenBright(`✦ Por favor, Ingrese el número de WhatsApp.\n${chalk.bold.yellowBright(`✏  Ejemplo: 5023145xxxx`)}\n${chalk.bold.magentaBright('---> ')}`)))
+phoneNumber = await question(chalk.bgBlack(chalk.bold.greenBright(`✨️ Por favor, Ingrese el número de WhatsApp.\n${chalk.bold.yellowBright(`🌸 Ejemplo: 57321×××××××`)}\n${chalk.bold.magentaBright('---> ')}`)))
 phoneNumber = phoneNumber.replace(/\D/g,'')
 if (!phoneNumber.startsWith('+')) {
 phoneNumber = `+${phoneNumber}`
@@ -209,14 +210,14 @@ addNumber = phoneNumber.replace(/\D/g, '')
 setTimeout(async () => {
 let codeBot = await conn.requestPairingCode(addNumber)
 codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot
-console.log(chalk.bold.white(chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN ✧`)), chalk.bold.white(chalk.white(codeBot)))
+console.log(chalk.bold.white(chalk.bgMagenta(`🌸 CÓDIGO DE VINCULACIÓN `)), chalk.bold.white(chalk.white(codeBot)))
 }, 3000)
 }}}
 }
 
 conn.isInit = false;
 conn.well = false;
-//conn.logger.info(`✦  H E C H O\n`)
+//conn.logger.info(`✨️ H E C H O\n`)
 
 if (!opts['test']) {
 if (global.db) setInterval(async () => {
@@ -242,7 +243,7 @@ if (opcion == '1' || methodCodeQR) {
 console.log(chalk.bold.yellow(`\n❐ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS`))}
 }
 if (connection == 'open') {
-console.log(chalk.bold.green('\nSe conecto a RoxyBot ╰‿╯'))
+  console.log(chalk.bold.green('\n✨️ Roxy-bot Conectada con éxito 🌸'))
 }
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
 if (connection === 'close') {
@@ -315,29 +316,45 @@ isInit = false
 return true
 };
 
-//Arranque nativo para subbots by - ReyEndymion >> https://github.com/ReyEndymion
+//Arranque nativo para subbots 
+
 
 global.rutaJadiBot = join(__dirname, './JadiBots')
 
-if (global.nagiJadibts) {
-if (!existsSync(global.rutaJadiBot)) {
-mkdirSync(global.rutaJadiBot, { recursive: true }) 
-console.log(chalk.bold.cyan(`La carpeta: ${jadi} se creó correctamente.`))
-} else {
-console.log(chalk.bold.cyan(`La carpeta: ${jadi} ya está creada.`)) 
-}
+if (global.roxyJadibts) {
 
-const readRutaJadiBot = readdirSync(rutaJadiBot)
-if (readRutaJadiBot.length > 0) {
-const creds = 'creds.json'
-for (const gjbts of readRutaJadiBot) {
-const botPath = join(rutaJadiBot, gjbts)
-const readBotPath = readdirSync(botPath)
-if (readBotPath.includes(creds)) {
-nagiJadiBot({pathnagiJadiBot: botPath, m: null, conn, args: '', usedPrefix: '/', command: 'serbot'})
-}
-}
-}
+
+  if (!existsSync(global.rutaJadiBot)) {
+    mkdirSync(global.rutaJadiBot, { recursive: true })
+    console.log(chalk.bold.cyan(`📁 Carpeta creada: ${global.rutaJadiBot}`))
+  } else {
+    console.log(chalk.bold.cyan(`📁 Carpeta ya existente: ${global.rutaJadiBot}`))
+  }
+
+  const subbots = readdirSync(global.rutaJadiBot, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+
+  for (const nombreSubbot of subbots) {
+    const pathSubbot = join(global.rutaJadiBot, nombreSubbot)
+    const archivosSubbot = readdirSync(pathSubbot)
+
+    if (archivosSubbot.includes('creds.json')) {
+      try {
+        roxyJadiBot({
+          pathroxyJadiBot: pathSubbot,
+          m: null,
+          conn,
+          args: '',
+          usedPrefix: '/',
+          command: 'serbot'
+        })
+        console.log(chalk.green(`✅ Subbot cargado: ${nombreSubbot}`))
+      } catch (e) {
+        console.error(chalk.red(`❌ Error cargando subbot: ${nombreSubbot}`), e)
+      }
+    }
+  }
 }
 
 const pluginFolder = global.__dirname(join(__dirname, './plugins/index'))
@@ -510,96 +527,3 @@ return phoneUtil.isValidNumber(parsedNumber)
 } catch (error) {
 return false
 }}
-
-conn.ev.on('connection.update', async (update) => {
-    const { connection, lastDisconnect } = update
-    if (connection === 'close') {
-        let reason = new Boom(lastDisconnect?.error)?.output.statusCode
-        if (reason === DisconnectReason.loggedOut) {
-            console.log('Sesión cerrada, por favor elimina la carpeta sesiones y escanea nuevamente el código QR')
-            process.exit()
-        } else if (reason === DisconnectReason.connectionClosed) {
-            console.log('Conexión cerrada, reconectando...')
-            await startBot()
-        } else if (reason === DisconnectReason.connectionLost) {
-            console.log('Conexión perdida con el servidor, reconectando...')
-            await startBot()
-        } else if (reason === DisconnectReason.connectionReplaced) {
-            console.log('Conexión reemplazada, se ha abierto una nueva sesión. Por favor, cierra la sesión actual primero')
-            process.exit()
-        } else if (reason === DisconnectReason.restartRequired) {
-            console.log('Reinicio requerido, reiniciando...')
-            await startBot()
-        } else if (reason === DisconnectReason.timedOut) {
-            console.log('Tiempo de conexión agotado, reconectando...')
-            await startBot()
-        } else {
-            console.log(`Razón de desconexión desconocida: ${reason}|${connection}`)
-        }
-    } else if (connection === 'open') {
-        console.log('Conexión abierta')
-    }
-})
-
-// Manejo de sesiones
-conn.ev.on('creds.update', saveCreds)
-
-async function startBot() {
-    const { state, saveCreds } = await useMultiFileAuthState('./sessions')
-    const { version } = await fetchLatestBaileysVersion()
-    
-    const conn = makeWASocket({
-        version,
-        printQRInTerminal: true,
-        auth: state,
-        browser: ['RyzeMD', 'Safari', '1.0.0'],
-        connectTimeoutMs: 60_000,
-        authTimeoutMs: 60_000,
-        retryRequestDelayMs: 500,
-        maxCachedMessages: 50,
-        patchMessageBeforeSending: (message) => {
-            return message
-        },
-        getMessage: async (key) => {
-            return {
-                conversation: 'hello'
-            }
-        }
-    })
-
-    conn.isInit = false;
-    conn.well = false;
-
-    conn.ev.on('connection.update', async (update) => {
-        const { connection, lastDisconnect } = update
-        if (connection === 'close') {
-            let reason = new Boom(lastDisconnect?.error)?.output.statusCode
-            if (reason === DisconnectReason.loggedOut) {
-                console.log('Sesión cerrada, por favor elimina la carpeta sesiones y escanea nuevamente el código QR')
-                process.exit()
-            } else if (reason === DisconnectReason.connectionClosed) {
-                console.log('Conexión cerrada, reconectando...')
-                await startBot()
-            } else if (reason === DisconnectReason.connectionLost) {
-                console.log('Conexión perdida con el servidor, reconectando...')
-                await startBot()
-            } else if (reason === DisconnectReason.connectionReplaced) {
-                console.log('Conexión reemplazada, se ha abierto una nueva sesión. Por favor, cierra la sesión actual primero')
-                process.exit()
-            } else if (reason === DisconnectReason.restartRequired) {
-                console.log('Reinicio requerido, reiniciando...')
-                await startBot()
-            } else if (reason === DisconnectReason.timedOut) {
-                console.log('Tiempo de conexión agotado, reconectando...')
-                await startBot()
-            } else {
-                console.log(`Razón de desconexión desconocida: ${reason}|${connection}`)
-            }
-        } else if (connection === 'open') {
-            console.log('Conexión abierta')
-        }
-    })
-
-    // Manejo de sesiones
-    conn.ev.on('creds.update', saveCreds)
-}
