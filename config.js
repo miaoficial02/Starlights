@@ -87,7 +87,7 @@ global.photoSity = [catalogo]
 // ᘜᖇᑌᑭOՏ ᗪᗴ ᒪᗩ ᗷOT 🗂️
 global.gp1 = 'https://chat.whatsapp.com/F8KwM3rVqkS9HhR5msoRqQ'
 global.channel2 = 'https://whatsapp.com/channel/0029VajUPbECxoB0cYovo60W'
-global.md = 'https://github.com/El-brayan502/Roxy-MD--Multi-Device.git'
+global.md = 'https://github.com/El-brayan502/RoxyBot-MD'
 global.correo = 'brayanfree881@gmail.com'
 global.cn ='https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m';
 
