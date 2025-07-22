@@ -52,6 +52,10 @@ Para poder usar el bot necesitas:
 
 Abre tu terminal y ejecuta:
 
+```bash
+termux-setup-storage
+
+```
 
 ```bash
 git clone https://github.com/El-brayan502/RoxyBot-MD
