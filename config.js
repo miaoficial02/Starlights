@@ -1,3 +1,8 @@
+/*♡❀˖⁺. ༶🐻✨Este bot es oficialmente de DavBrayan🌻♡⛓ ⋆˙⊹❀♡
+ *.°•*.♡ ️ッ Prohibido editar los creditos ☁✧•. • °
+ ☆ Creador @Brayan
+ ˚ ༘♡ ·˚꒰Gracias por usar nuestra bot꒱ ₊˚ˑ༄
+
 import { watchFile, unwatchFile } from 'fs' 
 import chalk from 'chalk'
 import { fileURLToPath } from 'url'
