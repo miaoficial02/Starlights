@@ -18,16 +18,16 @@
 "eslint": "eslint .",
 "eslintfix": "eslint --fix ."
 },
-"homepage": "https://github.com/El-brayan502/Roxy-MD--Multi-Device",
+"homepage": "https://github.com/El-brayan502/RoxyBot-MD",
 "author": {
 "name": "DevBrayan"
 },
 "repository": {
 "type": "git",
-"url": "git+https://github.com/El-brayan502/Roxy-MD--Multi-Device.git"
+"url": "git+https://github.com/El-brayan502/RoxyBot-MD.git"
 },
 "bugs": {
-"url": "https://github.com/El-brayan502/Roxy-MD--Multi-Device/issues"
+"url": "https://github.com/El-brayan502/RoxyBot-MD/issues"
 },
 "license": "GPL-3.0-or-later",
 "dependencies": {
