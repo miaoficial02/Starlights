@@ -65,7 +65,7 @@ let handler = async (m, { conn, usedPrefix, __dirname, participants }) => {
           description: null,
           previewType: "PHOTO",
           thumbnailUrl: 'https://files.catbox.moe/9i5o9z.jpg',
-          sourceUrl: 'https://github.com/El-brayan502/Roxy-MD--Multi-Device/',
+          sourceUrl: 'https://github.com/El-brayan502/RoxyBot-MD/',
           mediaType: 1,
           renderLargerThumbnail: true
         }
