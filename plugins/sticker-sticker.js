@@ -47,7 +47,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     if (stiker) {
       conn.sendFile(m.chat, stiker, 'sticker.webp', '', m)
     } else {
-      return conn.reply(m.chat, '🍓𝘌𝘕𝘝𝘐𝘈 𝘜𝘕𝘈 𝘍𝘖𝘛𝘖 𝘖 𝘝𝘐𝘋𝘌𝘖 𝘗𝘈𝘙𝘈 𝘊𝘙𝘌𝘈𝘙 𝘜𝘕 𝘚𝘛𝘐𝘊𝘒𝘌𝘙\n\n🍰𝘚𝘐𝘎𝘜𝘌 𝘌𝘓 𝘊𝘈𝘕𝘈𝘓 𝘋𝘌 𝘓𝘈 𝘉𝘖𝘛 𝘗𝘈𝘙𝘈 𝘔𝘈𝘚 𝘕𝘖𝘝𝘌𝘋𝘈𝘋𝘌𝘚.', m, fake)
+      return conn.reply(m.chat, '🍓 𝗦𝗧𝗜𝗖𝗞𝗘𝗥 𝗘𝗡 𝗖𝗔𝗠𝗜𝗡𝗢...\n📌 Envía una *imagen* o *video corto (máx. 10s)* justo después de este mensaje para convertirlo en un sticker.\n📝 También puedes responder a una imagen o video con el comando `.s`\n\n⚠️ Si no funciona, asegúrate de que el archivo esté bien enviado.\n✨ ¿Te gusta la función? ¡Apóyanos siguiendo el canal oficial!.', m, fake)
     }
   }
 }
