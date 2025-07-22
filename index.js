@@ -36,127 +36,54 @@ const {CONNECTING} = ws
 const {chain} = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
-
-const originalConsoleError = console.error;
-console.error = function (...args) {
-    const msg = args.join(' ');
-    if (
-        msg.includes('Failed to decrypt message with any known session') ||
-        msg.includes('Bad MAC') ||
-        msg.includes('Closing stale open session for new outgoing prekey bundle')
-    ) {
-        return; 
-    }
-    originalConsoleError.apply(console, args);
-};
-
+//const yuw = dirname(fileURLToPath(import.meta.url))
+//let require = createRequire(megu)
 let { say } = cfonts
 
+console.log(
+    boxen(
+        chalk.bold.magentaBright('\n ＩＮＩＣＩＡＮＤＯ ＲＯＸＹ \n'),
+        {
+            padding: 1,
+            margin: 1,
+            borderStyle: 'double',
+            borderColor: 'whiteBright',
+            backgroundColor: 'black',
+            title: 'Roxy-MD',
+            titleAlignment: 'center'
+        }
+    )
+)
 
+say('Roxy-MD', {
+    font: 'block',
+    align: 'center',
+    colors: ['blue'],
+    background: 'transparent',
+    letterSpacing: 1,
+    lineHeight: 1
+})
 
+say('By DevBrayan', {
+    font: 'console',
+    align: 'center',
+    colors: ['red'],
+    background: 'transparent'
+})
 
-const sleep = ms => new Promise(res => setTimeout(res, ms))
-
-async function showBanner() {
-
-    const title = `
-█▀▀▄ ▄▀▄ █░█ ▄▀▀░
-█▐█▀ █░█ ▄▀▄ █░▀▌
-▀░▀▀ ░▀░ ▀░▀ ▀▀▀░
-
-    `.split('\n').map(line => chalk.hex('#ff00cc').bold(line)).join('\n')
-
-    const subtitle = chalk.hex('#00eaff').bold('✦ ROXYBOT-MD ✦').padStart(40)
-    const poweredMsg = chalk.hex('#00eaff').italic('powered by Brayan')
-    const aiMsg = chalk.hex('#ffb300').bold('🤖 RoxyAi - Tu compañera virtual')
-    const tips = [
-        chalk.hex('#ffb300')('💡 Tip: Usa /help para ver los comandos disponibles.'),
-        chalk.hex('#00eaff')('🌐 Síguenos en GitHub para actualizaciones.'),
-        chalk.hex('#ff00cc')('✨ Disfruta de la experiencia premium de nagitBot.')
-    ]
-    const loadingFrames = [
-        chalk.magentaBright('⠋ Cargando módulos...'),
-        chalk.magentaBright('⠙ Cargando módulos...'),
-        chalk.magentaBright('⠹ Cargando módulos...'),
-        chalk.magentaBright('⠸ Cargando módulos...'),
-        chalk.magentaBright('⠼ Cargando módulos...'),
-        chalk.magentaBright('⠴ Cargando módulos...'),
-        chalk.magentaBright('⠦ Cargando módulos...'),
-        chalk.magentaBright('⠧ Cargando módulos...'),
-        chalk.magentaBright('⠇ Cargando módulos...'),
-        chalk.magentaBright('⠏ Cargando módulos...')
-    ]
-
-    console.clear()
-   
-    console.log(
+console.log(
+    chalk.bold.yellow(
         boxen(
-            title + '\n' + subtitle,
+            '¡Bienvenido a RoxyBot!\nEl bot está arrancando, por favor espere...',
             {
                 padding: 1,
                 margin: 1,
-                borderStyle: 'double',
-                borderColor: 'magentaBright',
-                backgroundColor: 'black',
-                title: 'Roxy AI',
-                titleAlignment: 'center'
+                borderStyle: 'round',
+                borderColor: 'yellow'
             }
         )
     )
-
-    say('RoxyAi', {
-        font: 'block',
-        align: 'center',
-        colors: ['magentaBright', 'cyan'],
-        background: 'transparent',
-        letterSpacing: 1,
-        lineHeight: 1
-    })
-    say('powered by Brayan', {
-        font: 'console',
-        align: 'center',
-        colors: ['blueBright'],
-        background: 'transparent'
-    })
-    console.log('\n' + aiMsg + '\n')
-
-  
-    for (let i = 0; i < 18; i++) {
-        process.stdout.write('\r' + loadingFrames[i % loadingFrames.length])
-        await sleep(70)
-    }
-    process.stdout.write('\r' + ' '.repeat(40) + '\r') 
-
-  
-    console.log(
-        chalk.bold.cyanBright(
-            boxen(
-                chalk.bold('¡Bienvenido a RoxyAi!\n') +
-                chalk.hex('#00eaff')('La bot está arrancando, por favor espere...') +
-                '\n' +
-                tips.join('\n'),
-                {
-                    padding: 1,
-                    margin: 1,
-                    borderStyle: 'round',
-                    borderColor: 'cyan'
-                }
-            )
-        )
-    )
-    // Efecto de "sparkle" final
-    const sparkles = [
-        chalk.hex('#ff00cc')('✦'), chalk.hex('#00eaff')('✦'), chalk.hex('#ffb300')('✦'),
-        chalk.hex('#00eaff')('✦'), chalk.hex('#ff00cc')('✦'), chalk.hex('#ffb300')('✦')
-    ]
-    let sparkleLine = ''
-    for (let i = 0; i < 30; i++) {
-        sparkleLine += sparkles[i % sparkles.length]
-    }
-    console.log('\n' + sparkleLine + '\n')
-}
-
-await showBanner()
+)
 
 protoType()
 serialize()
@@ -209,11 +136,7 @@ loadDatabase()
 
 const {state, saveState, saveCreds} = await useMultiFileAuthState(global.sessions)
 const msgRetryCounterMap = (MessageRetryMap) => { };
-const msgRetryCounterCache = new NodeCache({
-    stdTTL: 600, 
-    checkperiod: 120, 
-    maxKeys: 1000 
-})
+const msgRetryCounterCache = new NodeCache()
 const {version} = await fetchLatestBaileysVersion();
 let phoneNumber = global.botNumber
 
@@ -243,22 +166,14 @@ console.info = () => {}
 console.debug = () => {} 
 
 const connectionOptions = {
-    logger: pino({ level: 'silent' }),
-    printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
-    mobile: MethodMobile,
-    browser: opcion == '1' ? [`${nameqr}`, 'Chrome', '120.0.0.0'] : methodCodeQR ? [`${nameqr}`, 'Chrome', '120.0.0.0'] : ['Chrome', '120.0.0.0'],
-    auth: {
-        creds: state.creds,
-        keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
-    },
-    retryRequestDelayMs: 1000,
-    qrTimeout: 40000,
-    connectTimeoutMs: 60000,
-    keepAliveIntervalMs: 25000,
-    emitOwnEvents: true,
-    maxQRAttempts: 3,
-    markOnlineOnConnect: true,
-    syncFullHistory: false,
+logger: pino({ level: 'silent' }),
+printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
+mobile: MethodMobile, 
+browser: opcion == '1' ? [`${nameqr}`, 'Edge', '20.0.04'] : methodCodeQR ? [`${nameqr}`, 'Edge', '20.0.04'] : ['Ubuntu', 'Edge', '110.0.1587.56'],
+auth: {
+creds: state.creds,
+keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
+},
 markOnlineOnConnect: true, 
 generateHighQualityLinkPreview: true, 
 getMessage: async (clave) => {
@@ -327,7 +242,7 @@ if (opcion == '1' || methodCodeQR) {
 console.log(chalk.bold.yellow(`\n❐ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS`))}
 }
 if (connection == 'open') {
-console.log(chalk.bold.green('\nSe conecto a Nagibot ╰‿╯'))
+console.log(chalk.bold.green('\nSe conecto a RoxyBot ╰‿╯'))
 }
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
 if (connection === 'close') {
@@ -399,6 +314,31 @@ conn.ev.on('creds.update', conn.credsUpdate)
 isInit = false
 return true
 };
+
+//Arranque nativo para subbots by - ReyEndymion >> https://github.com/ReyEndymion
+
+global.rutaJadiBot = join(__dirname, './JadiBots')
+
+if (global.nagiJadibts) {
+if (!existsSync(global.rutaJadiBot)) {
+mkdirSync(global.rutaJadiBot, { recursive: true }) 
+console.log(chalk.bold.cyan(`La carpeta: ${jadi} se creó correctamente.`))
+} else {
+console.log(chalk.bold.cyan(`La carpeta: ${jadi} ya está creada.`)) 
+}
+
+const readRutaJadiBot = readdirSync(rutaJadiBot)
+if (readRutaJadiBot.length > 0) {
+const creds = 'creds.json'
+for (const gjbts of readRutaJadiBot) {
+const botPath = join(rutaJadiBot, gjbts)
+const readBotPath = readdirSync(botPath)
+if (readBotPath.includes(creds)) {
+nagiJadiBot({pathnagiJadiBot: botPath, m: null, conn, args: '', usedPrefix: '/', command: 'serbot'})
+}
+}
+}
+}
 
 const pluginFolder = global.__dirname(join(__dirname, './plugins/index'))
 const pluginFilter = (filename) => /\.js$/.test(filename)
@@ -503,114 +443,57 @@ unlinkSync(`./${jadi}/${directorio}/${fileInDir}`)
 }})
 }})
 if (SBprekey.length === 0) {
-    console.log(
-        chalk.bgHex('#232946').hex('#eebbc3').bold(
-            `\n╭━━━[ ${jadi} ]━━━╮\n│  ✨ Nada por eliminar. ¡Todo limpio! ✨\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫♻︎`
-        )
-    )
+console.log(chalk.bold.green(`\n╭» ❍ ${jadi} ❍\n│→ NADA POR ELIMINAR \n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ⌫ ♻︎`))
 } else {
-    console.log(
-        chalk.bgHex('#232946').hex('#b8c1ec').bold(
-            `\n╭━━━[ ${jadi} ]━━━╮\n│  🧹 Archivos no esenciales eliminados (${SBprekey.length})\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫♻︎︎`
-        )
-    )
-}
-} catch (err) {
-    console.log(
-        chalk.bgHex('#232946').hex('#ffadad').bold(
-            `\n╭━━━[ ${jadi} ]━━━╮\n│  ⚠️ Ocurrió un error al eliminar archivos\n│  ${err}\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫✘`
-        )
-    )
-}
-}
+console.log(chalk.bold.cyanBright(`\n╭» ❍ ${jadi} ❍\n│→ ARCHIVOS NO ESENCIALES ELIMINADOS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ⌫ ♻︎︎`))
+}} catch (err) {
+console.log(chalk.bold.red(`\n╭» ❍ ${jadi} ❍\n│→ OCURRIÓ UN ERROR\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ⌫ ♻\n` + err))
+}}
 
 function purgeOldFiles() {
-    const directories = [`./${sessions}/`, `./${jadi}/`]
-    directories.forEach(dir => {
-        try {
-            const files = readdirSync(dir)
-            let deleted = 0
-            files.forEach(file => {
-                if (file !== 'creds.json') {
-                    const filePath = path.join(dir, file)
-                    unlinkSync(filePath)
-                    deleted++
-                    console.log(
-                        chalk.bgHex('#232946').hex('#eebbc3').bold(
-                            `\n│  🗑️ ${file} eliminado de ${dir}`
-                        )
-                    )
-                }
-            })
-            if (deleted > 0) {
-                console.log(
-                    chalk.bgHex('#232946').hex('#b8c1ec').bold(
-                        `\n╭━━━[ ${dir} ]━━━╮\n│  ✅ ${deleted} archivos residuales eliminados\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫♻`
-                    )
-                )
-            } else {
-                console.log(
-                    chalk.bgHex('#232946').hex('#eebbc3').bold(
-                        `\n╭━━━[ ${dir} ]━━━╮\n│  ✨ Nada que eliminar aquí\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫♻`
-                    )
-                )
-            }
-        } catch (err) {
-            console.log(
-                chalk.bgHex('#232946').hex('#ffadad').bold(
-                    `\n╭━━━[ ${dir} ]━━━╮\n│  ⚠️ Error al limpiar archivos\n│  ${err}\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫✘`
-                )
-            )
-        }
-    })
-}
+const directories = [`./${sessions}/`, `./${jadi}/`]
+directories.forEach(dir => {
+readdirSync(dir, (err, files) => {
+if (err) throw err
+files.forEach(file => {
+if (file !== 'creds.json') {
+const filePath = path.join(dir, file);
+unlinkSync(filePath, err => {
+if (err) {
+console.log(chalk.bold.red(`\n╭» ❍ ARCHIVO ❍\n│→ ${file} NO SE LOGRÓ BORRAR\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ⌫ ✘\n` + err))
+} else {
+console.log(chalk.bold.green(`\n╭» ❍ ARCHIVO ❍\n│→ ${file} BORRADO CON ÉXITO\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ⌫ ♻`))
+} }) }
+}) }) }) }
 
 function redefineConsoleMethod(methodName, filterStrings) {
-    const originalConsoleMethod = console[methodName]
-    console[methodName] = function() {
-        const message = arguments[0]
-        if (typeof message === 'string' && filterStrings.some(filterString => message.includes(atob(filterString)))) {
-            arguments[0] = ""
-        }
-        originalConsoleMethod.apply(console, arguments)
-    }
+const originalConsoleMethod = console[methodName]
+console[methodName] = function() {
+const message = arguments[0]
+if (typeof message === 'string' && filterStrings.some(filterString => message.includes(atob(filterString)))) {
+arguments[0] = ""
 }
-
-// Limpieza periódica con mensajes cool
-setInterval(async () => {
-    if (stopped === 'close' || !conn || !conn.user) return
-    await clearTmp()
-    console.log(
-        chalk.bgHex('#232946').hex('#b8c1ec').bold(
-            `\n╭━━━[ MULTIMEDIA ]━━━╮\n│  🧹 Archivos temporales eliminados\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫♻`
-        )
-    )
-}, 1000 * 60 * 4) // 4 min 
+originalConsoleMethod.apply(console, arguments)
+}}
 
 setInterval(async () => {
-    if (stopped === 'close' || !conn || !conn.user) return
-    await purgeSession()
-    console.log(
-        chalk.bgHex('#232946').hex('#b8c1ec').bold(
-            `\n╭━━━[ ${global.sessions} ]━━━╮\n│  🧹 Sesiones no esenciales eliminadas\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫♻`
-        )
-    )
-}, 1000 * 60 * 10) // 10 min
+if (stopped === 'close' || !conn || !conn.user) return
+await clearTmp()
+console.log(chalk.bold.cyanBright(`\n╭» ❍ MULTIMEDIA ❍\n│→ ARCHIVOS DE LA CARPETA TMP ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ⌫ ♻`))}, 1000 * 60 * 4) // 4 min 
 
 setInterval(async () => {
-    if (stopped === 'close' || !conn || !conn.user) return
-    await purgeSessionSB()
-}, 1000 * 60 * 10) 
+if (stopped === 'close' || !conn || !conn.user) return
+await purgeSession()
+console.log(chalk.bold.cyanBright(`\n╭» ❍ ${global.sessions} ❍\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ⌫ ♻`))}, 1000 * 60 * 10) // 10 min
 
 setInterval(async () => {
-    if (stopped === 'close' || !conn || !conn.user) return
-    await purgeOldFiles()
-    console.log(
-        chalk.bgHex('#232946').hex('#b8c1ec').bold(
-            `\n╭━━━[ ARCHIVOS ]━━━╮\n│  🧹 Archivos residuales eliminados\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫♻`
-        )
-    )
-}, 1000 * 60 * 10)
+if (stopped === 'close' || !conn || !conn.user) return
+await purgeSessionSB()}, 1000 * 60 * 10) 
+
+setInterval(async () => {
+if (stopped === 'close' || !conn || !conn.user) return
+await purgeOldFiles()
+console.log(chalk.bold.cyanBright(`\n╭» ❍ ARCHIVOS ❍\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ⌫ ♻`))}, 1000 * 60 * 10)
 
 _quickTest().then(() => conn.logger.info(chalk.bold(`✦  H E C H O\n`.trim()))).catch(console.error)
 
@@ -658,6 +541,7 @@ conn.ev.on('connection.update', async (update) => {
     }
 })
 
+// Manejo de sesiones
 conn.ev.on('creds.update', saveCreds)
 
 async function startBot() {
@@ -668,7 +552,7 @@ async function startBot() {
         version,
         printQRInTerminal: true,
         auth: state,
-        browser: ['Nagitbot', 'Safari', '1.0.0'],
+        browser: ['RyzeMD', 'Safari', '1.0.0'],
         connectTimeoutMs: 60_000,
         authTimeoutMs: 60_000,
         retryRequestDelayMs: 500,
@@ -678,7 +562,7 @@ async function startBot() {
         },
         getMessage: async (key) => {
             return {
-                conversation: ''
+                conversation: 'hello'
             }
         }
     })
@@ -716,52 +600,6 @@ async function startBot() {
         }
     })
 
+    // Manejo de sesiones
     conn.ev.on('creds.update', saveCreds)
 }
-
-
-const cleanupResources = () => {
-    try {
-  
-        if (global.gc) {
-            global.gc();
-        }
-
-   
-        const used = process.memoryUsage();
-        console.log(
-            chalk.bgHex('#232946').hex('#b8c1ec').bold(
-                `\n╭━━━[ MEMORIA ]━━━╮\n│  📊 Uso de memoria: ${Math.round(used.heapUsed / 1024 / 1024)}MB\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫ℹ️`
-            )
-        );
-
-        if (global.conn && global.conn.chats) {
-            const chats = Object.values(global.conn.chats);
-            let chatCount = 0;
-            
-            chats.forEach(chat => {
-                if (chat.messages && Object.keys(chat.messages).length > 100) {
-                    chat.messages = {};
-                    chatCount++;
-                }
-            });
-
-            if (chatCount > 0) {
-                console.log(
-                    chalk.bgHex('#232946').hex('#b8c1ec').bold(
-                        `\n╭━━━[ CACHÉ ]━━━╮\n│  🧹 Se limpió el caché de ${chatCount} chats\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫♻️`
-                    )
-                );
-            }
-        }
-    } catch (error) {
-        console.log(
-            chalk.bgHex('#232946').hex('#ffadad').bold(
-                `\n╭━━━[ ERROR ]━━━╮\n│  ⚠️ Error en limpieza: ${error.message}\n╰━━━━━━━━━━━━━━━━━━━━━━━⌫✘`
-            )
-        );
-    }
-};
-
-
-setInterval(cleanupResources, 1000 * 60 * 30); 
