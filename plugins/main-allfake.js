@@ -85,7 +85,7 @@ global.verifyaleatorio = ['registrar', 'reg', 'verificar', 'verify', 'register']
 var canal = 'https://whatsapp.com/channel/0029VajUPbECxoB0cYovo60W'  
 let canal2 = 'https://whatsapp.com/channel/0029VajUPbECxoB0cYovo60W'
 var git = 'https://github.com/El-brayan502'
-var github = 'https://github.com/El-brayan502/Roxy-MD--Multi-Device' 
+var github = 'https://github.com/El-brayan502/RoxyBot-MD' 
 
 global.redes = [canal, canal2, git, github].getRandom()
 
