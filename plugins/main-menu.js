@@ -95,9 +95,8 @@ let handler = async (m, { conn, usedPrefix, __dirname, participants }) => {
 ┝⎆ [  ${usedPrefix}ᴏᴡɴᴇʀ
 ◈┄──━━┉─࿂
 ◈───≼ _*NSFW*_ ≽──⊚
-┝⎆ [  ${usedPrefix}ᴜɴʀᴇɢ
+┝⎆ [  ${usedPrefix}ғᴏʟʟᴀʀ
 ◈┄──━━┉─࿂
-
 ◈───≼ _*FUN*_ ≽──⊚
 ┝⎆ [  ${usedPrefix}ᴛᴏᴘ <text>
 ┝⎆ [  ${usedPrefix}ɢᴀʏ
