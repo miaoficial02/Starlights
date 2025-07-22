@@ -47,9 +47,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     if (stiker) {
       conn.sendFile(m.chat, stiker, 'sticker.webp', '', m)
     } else {
-      return conn.reply(m.chat, '🍓 𝗦𝗧𝗜𝗖𝗞𝗘𝗥 𝗘𝗡 𝗖𝗔𝗠𝗜𝗡𝗢...
-
-📌 Envía una *imagen* o *video corto (máx. 10s)* justo después de este mensaje para convertirlo en un sticker.\n📝 También puedes responder a una imagen o video con el comando `.s`\n⚠️ Si no funciona, asegúrate de que el archivo esté bien enviado.\n✨ ¿Te gusta la función? ¡Apóyanos siguiendo el canal oficial!.', m, fake)
+      return conn.reply(m.chat, '🍓 𝗦𝗧𝗜𝗖𝗞𝗘𝗥 𝗘𝗡 𝗖𝗔𝗠𝗜𝗡𝗢...\n📌 Envía una *imagen* o *video corto (máx. 10s)* justo después de este mensaje para convertirlo en un sticker.\n📝 También puedes responder a una imagen o video con el comando `.s`\n⚠️ Si no funciona, asegúrate de que el archivo esté bien enviado.\n✨ ¿Te gusta la función? ¡Apóyanos siguiendo el canal oficial!.', m, fake)
     }
   }
 }
