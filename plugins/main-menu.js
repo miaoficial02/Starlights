@@ -78,12 +78,12 @@ let hora = new Date().getHours()
 if (hora >= 6 && hora < 18) {
   saludo = '🌞 ᴴᵒˡᵃ ˢᵉⁿᵖᵃᶦ, ᑫᵘᵉ ᵗᵉⁿᵍᵃˢ ᵘⁿ ˡⁱⁿᵈᵒ ᵈⁱᵃ'
 } else {
-  saludo = '🌙 ¿ᴾᵒʳ ᑫᵘᵉ ⁿᵒ ᵗᵉ ᵈᵘᵉʳᵐᵉˢ ˢᵉⁿᵖᵃⁱ ᵘʷᵘ?'
+  saludo = '🍭 ¿Por qué aún no duermes, onii-chan? 🥱'
 }
 
     const body = `
 🎀 Bienvenido a Roxy AI
-${saludo} ? 🥱, *${taguser}*!
+${saludo} , *${taguser}*!
 ────────────────
 ✨ I N F O R M A C I Ó N ✨
 · › 🌺 Nombre del Bot: RoxyBot-MD 
