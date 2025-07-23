@@ -27,7 +27,6 @@ export const handler = {
   help: ['contar', 'estadisticas'],
   group: true,
 
-  // Conteo automático
   async all(m) {
     const chatId = m.chat;
     const sender = m.sender;
@@ -56,7 +55,6 @@ export const handler = {
     guardarDB();
   },
 
-  // Comando principal
   async handler(m, { conn, participants }) {
     const sender = m.sender;
     const isAdmin = participants?.some(p => p.id === sender && p.admin);
@@ -68,10 +66,9 @@ export const handler = {
     const chatId = m.chat;
     if (!db[chatId]) return m.reply('❌ No hay datos en este grupo todavía.');
 
-    // Enviar barra de carga falsa
+    // Barra de carga simulada
     const loadingMsg = await m.reply(`⏳ Procesando estadísticas...\n▭▭▭▭▭▭▭▭▭▭ 0%`);
-
-    let etapas = [
+    const etapas = [
       '▮▭▭▭▭▭▭▭▭▭ 10%',
       '▮▮▭▭▭▭▭▭▭▭ 20%',
       '▮▮▮▭▭▭▭▭▭▭ 30%',
@@ -85,27 +82,42 @@ export const handler = {
     ];
 
     for (let etapa of etapas) {
-      await new Promise(r => setTimeout(r, 200)); // Simula progreso
+      await new Promise(r => setTimeout(r, 150));
       await conn.sendMessage(m.chat, { edit: loadingMsg.key, text: `⏳ Procesando estadísticas...\n${etapa}` });
     }
 
-    // Preparar estadísticas
-    let texto = `📊 *Estadísticas de mensajes en este grupo:*\n\n`;
+    // Generar ranking por cantidad total de mensajes
+    const totalPorUsuario = Object.entries(db[chatId])
+      .map(([jid, datos]) => {
+        return {
+          jid,
+          total: (datos.mensajes || 0) + (datos.imagenes || 0) + (datos.videos || 0) + (datos.audios || 0) + (datos.stickers || 0) + (datos.encuestas || 0),
+          datos
+        };
+      })
+      .sort((a, b) => b.total - a.total);
 
-    const participantes = Object.entries(db[chatId]);
+    let texto = `📊 *Estadísticas de participación en el grupo:*\n\n`;
 
-    for (const [jid, datos] of participantes) {
+    for (let i = 0; i < totalPorUsuario.length; i++) {
+      const { jid, total, datos } = totalPorUsuario[i];
       const nombre = (await conn.getName(jid)) || jid.split('@')[0];
-      texto += `👤 *${nombre}*\n`;
+
+      const medalla =
+        i === 0 ? '🥇' :
+        i === 1 ? '🥈' :
+        i === 2 ? '🥉' : `🔹`;
+
+      texto += `${medalla} *${nombre}*\n`;
       texto += `   📨 Mensajes: ${datos.mensajes || 0}\n`;
       texto += `   🖼️ Imágenes: ${datos.imagenes || 0}\n`;
       texto += `   📹 Videos: ${datos.videos || 0}\n`;
       texto += `   🎧 Audios: ${datos.audios || 0}\n`;
       texto += `   🔖 Stickers: ${datos.stickers || 0}\n`;
-      texto += `   🗳️ Encuestas: ${datos.encuestas || 0}\n\n`;
+      texto += `   🗳️ Encuestas: ${datos.encuestas || 0}\n`;
+      texto += `   📦 Total: ${total}\n\n`;
     }
 
-    // Reemplaza barra de carga por estadísticas finales
     await conn.sendMessage(m.chat, {
       edit: loadingMsg.key,
       text: texto.trim()
