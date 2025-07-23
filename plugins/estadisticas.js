@@ -1,17 +1,13 @@
 import fs from 'fs';
 
-const RUTA_DB = './database/estadisticas.json';
+const PATH = './database/estadisticas.json';
+let db = fs.existsSync(PATH) ? JSON.parse(fs.readFileSync(PATH)) : {};
 
-let db = {};
-if (fs.existsSync(RUTA_DB)) {
-  db = JSON.parse(fs.readFileSync(RUTA_DB));
+function saveDB() {
+  fs.writeFileSync(PATH, JSON.stringify(db, null, 2));
 }
 
-function guardarDB() {
-  fs.writeFileSync(RUTA_DB, JSON.stringify(db, null, 2));
-}
-
-function tipoMensaje(m) {
+function detectarTipo(m) {
   const msg = m.message || {};
   if (msg.imageMessage) return 'imagenes';
   if (msg.videoMessage) return 'videos';
@@ -22,13 +18,14 @@ function tipoMensaje(m) {
 }
 
 export async function all(m) {
-  const chatId = m.chat;
-  const sender = m.sender;
   if (!m.isGroup) return;
 
-  if (!db[chatId]) db[chatId] = {};
-  if (!db[chatId][sender]) {
-    db[chatId][sender] = {
+  const grupo = m.chat;
+  const usuario = m.sender;
+
+  if (!db[grupo]) db[grupo] = {};
+  if (!db[grupo][usuario]) {
+    db[grupo][usuario] = {
       mensajes: 0,
       imagenes: 0,
       videos: 0,
@@ -38,65 +35,62 @@ export async function all(m) {
     };
   }
 
-  const tipo = tipoMensaje(m);
-  if (db[chatId][sender][tipo] !== undefined) {
-    db[chatId][sender][tipo]++;
+  const tipo = detectarTipo(m);
+  if (db[grupo][usuario][tipo] != null) {
+    db[grupo][usuario][tipo]++;
+    saveDB();
   }
-
-  guardarDB();
 }
 
 export const handler = {
-  command: ['estadisticas', 'contar'],
-  tags: ['group'],
-  help: ['estadisticas', 'contar'],
+  command: ['estadisticas'],
+  tags: ['grupo'],
+  help: ['estadisticas'],
   group: true,
 
   async handler(m, { conn, participants }) {
-    const sender = m.sender;
-    const isAdmin = participants?.some(p => p.id === sender && p.admin);
+    const isAdmin = participants?.some(p => p.id === m.sender && p.admin);
+    if (!isAdmin) return m.reply('🚫 Este comando solo puede ser usado por *administradores del grupo*.');
 
-    if (!isAdmin) {
-      return m.reply('🚫 Este comando solo lo pueden usar los administradores del grupo.');
-    }
+    const grupo = m.chat;
+    if (!db[grupo]) return m.reply('📉 No hay datos registrados en este grupo.');
 
-    const chatId = m.chat;
-    if (!db[chatId]) return m.reply('❌ No hay datos para este grupo todavía.');
-
-    // Simular barra de carga
-    const msg = await m.reply('⏳ Procesando estadísticas...\n[░░░░░░░░░░] 0%');
-    const pasos = ['10%', '30%', '50%', '70%', '90%', '100%'];
-    for (const paso of pasos) {
-      await new Promise(res => setTimeout(res, 200));
+    const carga = await m.reply('⏳ Procesando estadísticas...\n[░░░░░░░░░░] 0%');
+    const fases = ['10%', '30%', '50%', '70%', '90%', '100%'];
+    for (let i = 0; i < fases.length; i++) {
+      await new Promise(r => setTimeout(r, 150));
       await conn.sendMessage(m.chat, {
-        edit: msg.key,
-        text: `⏳ Procesando estadísticas...\n[${'▓'.repeat(pasos.indexOf(paso)+1)}${'░'.repeat(10 - pasos.indexOf(paso)-1)}] ${paso}`
+        edit: carga.key,
+        text: `⏳ Procesando estadísticas...\n[${'▓'.repeat(i + 1)}${'░'.repeat(10 - (i + 1))}] ${fases[i]}`
       });
     }
 
-    const lista = Object.entries(db[chatId]).map(([jid, datos]) => {
-      const total = Object.values(datos).reduce((a, b) => a + b, 0);
-      return { jid, total, datos };
-    }).sort((a, b) => b.total - a.total);
+    const lista = Object.entries(db[grupo])
+      .map(([jid, data]) => {
+        const total = Object.values(data).reduce((a, b) => a + b, 0);
+        return { jid, total, ...data };
+      })
+      .sort((a, b) => b.total - a.total);
 
-    let texto = `📊 *Ranking de participación:*\n\n`;
+    let texto = `📊 *Estadísticas de participación del grupo:*\n\n`;
 
     for (let i = 0; i < lista.length; i++) {
-      const { jid, total, datos } = lista[i];
-      const nombre = (await conn.getName(jid).catch(() => jid.split('@')[0])) || jid.split('@')[0];
+      const u = lista[i];
+      const nombre = (await conn.getName(u.jid).catch(() => u.jid.split('@')[0])) || u.jid;
       const medalla = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🔹';
+
       texto += `${medalla} *${nombre}*\n`;
-      texto += `   📨 Mensajes: ${datos.mensajes}\n`;
-      texto += `   🖼️ Imágenes: ${datos.imagenes}\n`;
-      texto += `   📹 Videos: ${datos.videos}\n`;
-      texto += `   🎧 Audios: ${datos.audios}\n`;
-      texto += `   🔖 Stickers: ${datos.stickers}\n`;
-      texto += `   🗳️ Encuestas: ${datos.encuestas}\n`;
-      texto += `   📦 Total: ${total}\n\n`;
+      texto += `   📨 Mensajes: ${u.mensajes || 0}\n`;
+      texto += `   🖼️ Imágenes: ${u.imagenes || 0}\n`;
+      texto += `   📹 Videos: ${u.videos || 0}\n`;
+      texto += `   🎧 Audios: ${u.audios || 0}\n`;
+      texto += `   🔖 Stickers: ${u.stickers || 0}\n`;
+      texto += `   🗳️ Encuestas: ${u.encuestas || 0}\n`;
+      texto += `   📦 Total: ${u.total}\n\n`;
     }
 
     await conn.sendMessage(m.chat, {
-      edit: msg.key,
+      edit: carga.key,
       text: texto.trim()
     });
   }
