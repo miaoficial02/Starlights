@@ -178,6 +178,7 @@ let handler = async (m, { conn, usedPrefix, __dirname, participants }) => {
 ◈┄──━━┉─࿂
 
 ◈───≼ _*OWNER*_ ≽──⊚
+┝⎆ [  ${usedPrefix}ᴅsᴏᴡɴᴇʀ
 ┝⎆ [  ${usedPrefix}sᴇᴛɴᴀᴍᴇ
 ┝⎆ [  ${usedPrefix}sᴇᴛᴘᴘ <img>
 ┝⎆ [  ${usedPrefix}ʀᴇsᴛᴀʀᴛ
