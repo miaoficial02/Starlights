@@ -102,7 +102,7 @@ const handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, i
 
   conn.reply(m.chat, `╭━━🎉 *ROXY CONFIGURACIÓN COMPLETA* ━━╮
 ┃\n┃ 🧩 *Función:* ${type}\n┃ 🎛 *Estado:* ${isEnable ? '✅ ACTIVADO' : '❌ DESACTIVADO'}\n┃ ${isAll ? '⚙️ *Aplicado globalmente en el bot*' : '👥 *Aplicado solo en este grupo*'}
-┃\n╰━━━━━━━━━━━━━━━━━━━━━━╯\n✨ *¡Entrenador, sigue configurando tu aventura Pokémon!*`, m);
+┃\n╰━━━━━━━━━━━━━━━━━━━━━━╯\n✨ *¡Senpai, sigue configurando tu aventura Roxy!*`, m);
 };
 
 handler.help = ['welcome', 'bv', 'bienvenida', 'antisubbots', 'antisub', 'antisubot', 'antibot2', 'modoadmin', 'soloadmin', 'reaction', 'reaccion', 'emojis', 'nsfw', 'nsfwhot', 'nsfwhorny', 'jadibotmd', 'modejadibot', 'detect', 'avisos', 'detect2', 'eventos', 'antilink', 'antilink2'];
