@@ -83,7 +83,7 @@ if (hora >= 6 && hora < 18) {
 
     const body = `
 🎀 Bienvenido a Roxy AI
-${saludo} , *${taguser}*!
+${saludo}, *${taguser}*!
 ────────────────
 ✨ I N F O R M A C I Ó N ✨
 · › 🌺 Nombre del Bot: RoxyBot-MD 
