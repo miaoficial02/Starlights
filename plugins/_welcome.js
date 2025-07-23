@@ -4,6 +4,9 @@
 export async function before(m, { conn }) {
   if (!m.isGroup || !m.messageStubType || !m.messageStubParameters) return;
 
+  // ← Esta línea verifica si la bienvenida está activada
+  if (!db.data.chats[m.chat].welcome) return;
+
   const groupMetadata = await conn.groupMetadata(m.chat);
   const participants = m.messageStubParameters || [];
   const date = new Date();
