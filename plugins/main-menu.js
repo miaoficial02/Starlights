@@ -83,7 +83,7 @@ if (hora >= 6 && hora < 18) {
 
     const body = `
 🎀 Bienvenido a Roxy AI
-🍭 ¿Por qué aún no duermes, onii-chan? 🥱, *${taguser}*!
+${saludo} ? 🥱, *${taguser}*!
 ────────────────
 ✨ I N F O R M A C I Ó N ✨
 · › 🌺 Nombre del Bot: RoxyBot-MD 
