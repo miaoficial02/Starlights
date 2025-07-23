@@ -73,12 +73,16 @@ let handler = async (m, { conn, usedPrefix, __dirname, participants }) => {
     }
 
 let saludo
-let hora = new Date().getHours()
+let hora = new Date().getUTCHours() - 6 // Horario de Guatemala
 
-if (hora >= 6 && hora < 18) {
-  saludo = '✨ Hola senpai, que tengas un lindo día 😊'
+if (hora < 0) hora += 24 // por si queda en negativo
+
+if (hora >= 5 && hora < 13) {
+  saludo = '🌞 Hola senpai, que tengas un lindo día ✨'
+} else if (hora >= 13 && hora < 18) {
+  saludo = '🍃 Buenas tardes, senpai 🧸'
 } else {
-  saludo = '🍭 ¿Por qué aún no duermes, onii-chan? 🥱'
+  saludo = '🌙 ¿Por qué aún no duermes, onii-chan? 💤'
 }
 
     const body = `
