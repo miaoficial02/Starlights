@@ -72,6 +72,15 @@ let handler = async (m, { conn, usedPrefix, __dirname, participants }) => {
       }
     }
 
+let saludo
+let hora = new Date().getHours()
+
+if (hora >= 6 && hora < 18) {
+  saludo = '🌞 ᴴᵒˡᵃ ˢᵉⁿᵖᵃᶦ, ᑫᵘᵉ ᵗᵉⁿᵍᵃˢ ᵘⁿ ˡⁱⁿᵈᵒ ᵈⁱᵃ'
+} else {
+  saludo = '🌙 ¿ᴾᵒʳ ᑫᵘᵉ ⁿᵒ ᵗᵉ ᵈᵘᵉʳᵐᵉˢ ˢᵉⁿᵖᵃⁱ ᵘʷᵘ?'
+}
+
     const body = `
 🎀 Bienvenido a Roxy AI
 🍭 ¿Por qué aún no duermes, onii-chan? 🥱, *${taguser}*!
