@@ -76,7 +76,7 @@ let saludo
 let hora = new Date().getHours()
 
 if (hora >= 6 && hora < 18) {
-  saludo = '🌞 ᴴᵒˡᵃ ˢᵉⁿᵖᵃᶦ, ᑫᵘᵉ ᵗᵉⁿᵍᵃˢ ᵘⁿ ˡⁱⁿᵈᵒ ᵈⁱᵃ'
+  saludo = '✨ Hola senpai, que tengas un lindo día 😊'
 } else {
   saludo = '🍭 ¿Por qué aún no duermes, onii-chan? 🥱'
 }
