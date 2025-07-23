@@ -16,7 +16,7 @@ const handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, i
     isEnable = false;
   } else {
     const estado = isEnable ? '🟢 ACTIVADO' : '🔴 DESACTIVADO';
-    return conn.reply(m.chat, `🧩 *ROXY CONFIGURADOR*\n━━━━━━━━━━━━━━━━━━━━━━\n🎮 *Entrenador*, puedes controlar la función: *${command}*\n\n⚙️ Usa:\n• *${usedPrefix}${command} on* – Activar\n• *${usedPrefix}${command} off* – Desactivar\n━━━━━━━━━━━━━━━━━━━━━━\n🎯 *Estado actual:* ${estado}\n━━━━━━━━━━━━━━━━━━━━━━`, m);
+    return conn.reply(m.chat, `🧩 *ROXY CONFIGURADOR*\n━━━━━━━━━━━━━━━━━━━━━━\n🎮 *Senpai*, puedes controlar la función: *${command}*\n\n⚙️ Usa:\n• *${usedPrefix}${command} on* – Activar\n• *${usedPrefix}${command} off* – Desactivar\n━━━━━━━━━━━━━━━━━━━━━━\n🎯 *Estado actual:* ${estado}\n━━━━━━━━━━━━━━━━━━━━━━`, m);
   }
 
   switch (type) {
