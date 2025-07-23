@@ -100,7 +100,9 @@ const handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, i
 
   chat[type] = isEnable;
 
-  conn.reply(m.chat, `🎉 *ROXY CONFIGURACIÓN COMPLETA*\n━━━━━━━━━━━━━━━━━━━━━━\n🧩 Función: *${type}*\n🎛 Estado: ${isEnable ? '🟢 ACTIVADO' : '🔴 DESACTIVADO'}\n${isAll ? '⚙️ Se aplicó a todo el bot' : '👥 Aplicado en este grupo'}\n━━━━━━━━━━━━━━━━━━━━━━\n✨ ¡Entrenador, sigue configurando tu aventura Pokémon!`, m);
+  conn.reply(m.chat, `╭━━🎉 *ROXY CONFIGURACIÓN COMPLETA* ━━╮
+┃\n┃ 🧩 *Función:* ${type}\n┃ 🎛 *Estado:* ${isEnable ? '✅ ACTIVADO' : '❌ DESACTIVADO'}\n┃ ${isAll ? '⚙️ *Aplicado globalmente en el bot*' : '👥 *Aplicado solo en este grupo*'}
+┃\n╰━━━━━━━━━━━━━━━━━━━━━━╯\n✨ *¡Entrenador, sigue configurando tu aventura Pokémon!*`, m);
 };
 
 handler.help = ['welcome', 'bv', 'bienvenida', 'antisubbots', 'antisub', 'antisubot', 'antibot2', 'modoadmin', 'soloadmin', 'reaction', 'reaccion', 'emojis', 'nsfw', 'nsfwhot', 'nsfwhorny', 'jadibotmd', 'modejadibot', 'detect', 'avisos', 'detect2', 'eventos', 'antilink', 'antilink2'];
