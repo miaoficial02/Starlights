@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const fstik = {
   api: {
     base: 'https://api.fstik.app',
@@ -46,7 +44,7 @@ const fstik = {
         success: true,
         code: 200,
         result: {
-          source: 'base de datos',
+          source: 'database',
           id: set.id,
           title: set.title,
           name: set.name,
@@ -78,7 +76,7 @@ const fstik = {
         success: false,
         code: err?.response?.status || 500,
         result: {
-          error: '¡Ocurrió un error, bro! 🫵🏻😂',
+          error: 'Error bree 🫵🏻😂',
           details: err.message
         }
       }
@@ -140,7 +138,7 @@ const fstik = {
         success: false,
         code: err?.response?.status || 500,
         result: {
-          error: 'No se pudo buscar el set de stickers, bro... 🤙🏻',
+          error: 'No se pudo buscar el sticker, bro... 🤙🏻',
           details: err.message
         }
       }
@@ -152,7 +150,7 @@ const fstik = {
       return {
         success: false,
         code: 400,
-        result: { error: 'El enlace de Telegram no es válido, bro 🗿' }
+        result: { error: '¿Qué pasa? No hay nombre del set de stickers 😏' }
       }
     }
 
@@ -161,7 +159,7 @@ const fstik = {
       return {
         success: false,
         code: 400,
-        result: { error: '¿Qué onda? No tiene nombre el set de stickers 😏' }
+        result: { error: 'El enlace de Telegram no es válido, bro 🗿' }
       }
     }
 
@@ -181,7 +179,7 @@ const fstik = {
       return {
         success: false,
         code: 400,
-        result: { error: '¡El texto no puede estar vacío, bro! 🗿' }
+        result: { error: 'La entrada no puede estar vacía, bro 🗿' }
       }
     }
 
@@ -197,7 +195,7 @@ const fstik = {
         return {
           success: false,
           code: 400,
-          result: { error: 'El enlace de Telegram no es válido, bro...' }
+          result: { error: 'El enlace de Telegram no es válido, bro...'}
         }
       }
     }
@@ -214,7 +212,7 @@ const fstik = {
       return {
         success: false,
         code: 400,
-        result: { error: '¡El texto no puede estar vacío, bro! 🗿' }
+        result: { error: 'La entrada no puede estar vacía, bro 🗿' }
       }
     }
 
@@ -244,7 +242,7 @@ const fstik = {
         return {
           success: false,
           code: 400,
-          result: { error: `El modo "${mode}" no es válido, bro...` }
+          result: { error: `Mode "${mode}" mah kagak valid euy...` }
         }
     }
   }
@@ -252,7 +250,7 @@ const fstik = {
 
 let handler = async (m, { conn, args, command }) => {
   try {
-    if (!args[0]) return m.reply('Escribe el nombre del sticker o el enlace de Telegram\n\nEjemplo:\n.fstik gatos\n.fstik https://t.me/addstickers/pepe_memes')
+    if (!args[0]) return m.reply('Introduce la consulta de búsqueda o el enlace del sticker Telegram\n\nExample :\n.fstik bokepanak\n.fstik https://t.me/addstickers/pepe_memes')
 
     const query = args.join(' ')
     const isLink = query.startsWith('https://t.me/addstickers/')
@@ -265,23 +263,23 @@ let handler = async (m, { conn, args, command }) => {
     }
 
     if (!result.success) {
-      return m.reply(result.result.error || 'Error bro :v')
+      return m.reply(result.result.error || 'Ertor Bang :v')
     }
 
     const sendInfo = async (set) => {
-      let text = `🌟 *INFORMACIÓN DEL SET DE STICKERS*\n\n`
-      text += `📌 *Nombre:* ${set.title}\n`
-      text += `🆔 *ID:* ${set.id}\n`
-      text += `📁 *Nombre del Set:* ${set.name}\n`
-      text += `📝 *Descripción:* ${set.description || 'Sin descripción'}\n`
-      text += `🏷️ *Etiquetas:* ${set.tags?.join(', ') || 'Sin etiquetas'}\n`
-      text += `📚 *Tipo:* ${set.kind}\n`
-      text += `🎨 *Formato:* ${set.type}\n`
-      text += `🌍 *Público:* ${set.public ? 'Sí' : 'No'}\n`
-      text += `🛡️ *Seguro:* ${set.safe ? 'Sí' : 'No'}\n`
-      text += `✅ *Verificado:* ${set.verified ? 'Sí' : 'No'}\n`
-      text += `📦 *Cantidad de Stickers:* ${set.stickerCount}\n`
-      text += `🔗 *Enlace:* https://t.me/addstickers/${set.name}\n\n`
+      let text = `INFO STICKER SET\n\n`
+      text += `nombre : ${set.title}\n`
+      text += `ID : ${set.id}\n`
+      text += `Nombre del Set : ${set.name}\n`
+      text += `Descripción : ${set.description || 'Sin descripción'}\n`
+      text += `Tags : ${set.tags?.join(', ') || 'Sin etiquetas'}\n`
+      text += `tipo : ${set.kind}\n`
+      text += `Formato : ${set.type}\n`
+      text += `Public : ${set.public ? 'Yes' : 'No'}\n`
+      text += `Seguro : ${set.safe ? 'Yes' : 'No'}\n`
+      text += `Verificado : ${set.verified ? 'Yes' : 'No'}\n`
+      text += `Cantidad : ${set.stickerCount}\n`
+      text += `Link : https://t.me/addstickers/${set.name}\n\n`
 
       await conn.sendMessage(m.chat, {
         image: { url: set.stickers?.[0]?.image_url },
@@ -319,3 +317,5 @@ let handler = async (m, { conn, args, command }) => {
 handler.help = ['fstik']
 handler.command = ['fstik', 'stickersearch', 'stickerinfo']
 handler.tags = ['tools']
+
+export default handler
