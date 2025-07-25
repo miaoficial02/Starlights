@@ -78,9 +78,9 @@ let hora = new Date().getUTCHours() - 6
 if (hora < 0) hora += 24 // por si queda en negativo
 
 if (hora >= 5 && hora < 13) {
-  saludo = '🌞 Hola senpai, que tengas un lindo día ✨'
+  saludo = '✨️ Hola senpai, que tengas un lindo día ❤️'
 } else if (hora >= 13 && hora < 18) {
-  saludo = '🍃 Buenas tardes, senpai 🧸'
+  saludo = '✨️ Buenas tardes, senpai que se te ofrece 💖'
 } else {
   saludo = '🍭 ¿Por qué aún no duermes, onii-chan? 🥱'
 }
