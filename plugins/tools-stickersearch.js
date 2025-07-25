@@ -250,7 +250,7 @@ const fstik = {
 
 let handler = async (m, { conn, args, command }) => {
   try {
-    if (!args[0]) return m.reply('Introduce la consulta de búsqueda o el enlace del sticker Telegram\n\nExample :\n.fstik bokepanak\n.fstik https://t.me/addstickers/pepe_memes')
+    if (!args[0]) return m.reply('Introduce la consulta de búsqueda o el enlace del sticker Telegram\n\nExample :\n.fstik gatitos\n.fstik https://t.me/addstickers/pepe_memes')
 
     const query = args.join(' ')
     const isLink = query.startsWith('https://t.me/addstickers/')
