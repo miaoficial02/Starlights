@@ -318,4 +318,4 @@ let handler = async (m, { conn, args, command }) => {
 
 handler.help = ['fstik']
 handler.command = ['fstik', 'stickersearch', 'stickerinfo']
-handler.tags = ['
+handler.tags = ['tools']
