@@ -82,7 +82,7 @@ if (hora >= 5 && hora < 13) {
 } else if (hora >= 13 && hora < 18) {
   saludo = '🍃 Buenas tardes, senpai 🧸'
 } else {
-  saludo = '🌙 ¿Por qué aún no duermes, onii-chan? 💤'
+  saludo = '🍭 ¿Por qué aún no duermes, onii-chan? 🥱'
 }
 
     const body = `
