@@ -4,8 +4,8 @@ const fstik = {
   api: {
     base: 'https://api.fstik.app',
     endpoints: {
-      direct: '/getStickerSetByName',  // Obtener set de stickers por nombre
-      search: '/searchStickerSet'      // Buscar sets de stickers
+      direct: '/getStickerSetByName',   // Endpoint para obtener set de stickers por nombre
+      search: '/searchStickerSet'       // Endpoint para buscar sets de stickers
     }
   },
 
@@ -14,16 +14,16 @@ const fstik = {
     'content-type': 'application/json',
     origin: 'https://webapp.fstik.app',
     referer: 'https://webapp.fstik.app/',
-    'user-agent': 'NB Android/1.0.0'
+    'user-agent': 'NB Android/1.0.0'  // Cabecera para emular una app Android
   },
 
-  // Función para obtener info de un set por nombre
+  // Función para obtener un set de stickers por nombre
   name: async (name) => {
     if (!name || typeof name !== 'string') {
       return {
         success: false,
         code: 400,
-        result: { error: 'La entrada no puede estar vacía, bro 🗿' }
+        result: { error: 'El input no puede estar vacío, amigo 🗿' }
       }
     }
 
@@ -86,7 +86,7 @@ const fstik = {
     }
   },
 
-  // Función para buscar sets de stickers con filtros
+  // Función para buscar sets de stickers con parámetros opcionales
   search: async ({ query = '', skip = 0, limit = 15, type = '', kind = 'regular' }) => {
     try {
       const payload = { query, skip, limit, type, kind, user_token: null }
@@ -102,7 +102,7 @@ const fstik = {
         return {
           success: false,
           code: 404,
-          result: { error: 'No se encontraron sets de stickers, bro.. intenta más tarde 😂🫵🏻' }
+          result: { error: 'No hay sets de stickers, bro.. intenta luego 😂🫵🏻' }
         }
       }
 
@@ -164,7 +164,7 @@ const fstik = {
       return {
         success: false,
         code: 400,
-        result: { error: 'Eh, no tiene nombre el set de stickers 😏' }
+        result: { error: '¿Qué es eso? No hay nombre del set de stickers 😏' }
       }
     }
 
@@ -179,13 +179,13 @@ const fstik = {
     })
   },
 
-  // Función para buscar ya sea por nombre o link
+  // Función para buscar un set de stickers o link
   lookup: async (input) => {
     if (!input || typeof input !== 'string') {
       return {
         success: false,
         code: 400,
-        result: { error: 'La entrada no puede estar vacía, bro 🗿' }
+        result: { error: 'El input no puede estar vacío, bro 🗿' }
       }
     }
 
@@ -201,7 +201,7 @@ const fstik = {
         return {
           success: false,
           code: 400,
-          result: { error: 'El link de Telegram no es válido, bro...' }
+          result: { error: 'El link de Telegram no es válido, bro... '}
         }
       }
     }
@@ -213,13 +213,13 @@ const fstik = {
     })
   },
 
-  // Función para manejar peticiones según modo
+  // Función principal para hacer solicitudes según el modo
   request: async (query, mode = '', options = {}) => {
     if (!query || typeof query !== 'string') {
       return {
         success: false,
         code: 400,
-        result: { error: 'La entrada no puede estar vacía, bro 🗿' }
+        result: { error: 'El input no puede estar vacío, bro 🗿' }
       }
     }
 
@@ -255,9 +255,10 @@ const fstik = {
   }
 }
 
+// Handler para el comando en el bot
 let handler = async (m, { conn, args, command }) => {
   try {
-    if (!args[0]) return m.reply('Introduce una consulta de búsqueda o link de sticker de Telegram\n\nEjemplo :\n.fstik gato\n.fstik https://t.me/addstickers/pepe_memes')
+    if (!args[0]) return m.reply('Introduce una consulta o link de sticker de Telegram\n\nEjemplo:\n.fstik bokepanak\n.fstik https://t.me/addstickers/pepe_memes')
 
     const query = args.join(' ')
     const isLink = query.startsWith('https://t.me/addstickers/')
@@ -270,52 +271,59 @@ let handler = async (m, { conn, args, command }) => {
     }
 
     if (!result.success) {
-      return m.reply(result.result.error || 'Error bro :v')
+      return m.reply(result.result.error || 'Error, bro :v')
     }
 
     const sendInfo = async (set) => {
       let text = `INFO DEL SET DE STICKERS\n\n`
-      text += `Nombre : ${set.title}\n`
-      text += `ID : ${set.id}\n`
-      text += `Nombre Set : ${set.name}\n`
-      text += `Descripción : ${set.description || 'Sin descripción'}\n`
-      text += `Tags : ${set.tags?.join(', ') || 'Sin tags'}\n`
-      text += `Tipo : ${set.kind}\n`
-      text += `Categoría : ${set.type}\n`
-      text += `Público : ${set.public ? 'Sí' : 'No'}\n`
-      text += `Seguro : ${set.safe ? 'Sí' : 'No'}\n`
-      text += `Verificado : ${set.verified ? 'Sí' : 'No'}\n`
-      text += `Cantidad de Stickers : ${set.stickerCount}\n`
-      text += `Link : https://t.me/addstickers/${set.name}\
+      text += `Nombre: ${set.title}\n`
+      text += `ID: ${set.id}\n`
+      text += `Nombre del Set: ${set.name}\n`
+      text += `Descripción: ${set.description || 'No hay descripción'}\n`
+      text += `Tags: ${set.tags?.join(', ') || 'No hay tags'}\n`
+      text += `Tipo: ${set.kind}\n`
+      text += `Categoría: ${set.type}\n`
+      text += `Público: ${set.public ? 'Sí' : 'No'}\n`
+      text += `Seguro: ${set.safe ? 'Sí' : 'No'}\n`
+      text += `Verificado: ${set.verified ? 'Sí' : 'No'}\n`
+      text += `Cantidad de Stickers: ${set.stickerCount}\n`
+      text += `Link: https://t.me/addstickers/${set.name}\n\n`
 
-      // Envía imagen de portada + texto
       await conn.sendMessage(m.chat, {
         image: { url: set.stickers?.[0]?.image_url },
         caption: text
       }, { quoted: m })
 
-      // Envía cada sticker como sticker en WhatsApp
       for (let sticker of set.stickers) {
         if (!sticker.image_url) continue
-        await conn.sendMessage(m.chat, { sticker: { url: sticker.image_url } }, { quoted: m })
-        await delay(700) // evita flood o errores
+
+        const res = await fetch(sticker.image_url)
+        const buffer = await res.arrayBuffer()
+
+        await conn.sendMessage(m.chat, {
+          sticker: { url: sticker.image_url }
+        }, { quoted: m })
+        await delay(800)
       }
     }
 
-    // Si devuelve múltiples sets, toma el primero
+    const delay = ms => new Promise(res => setTimeout(res, ms))
+
     if (Array.isArray(result.result)) {
-      await sendInfo(result.result[0])
+      const firstSet = result.result[0]
+      await sendInfo(firstSet)
     } else {
-      await sendInfo(result.result)
+      const set = result.result
+      await sendInfo(set)
     }
 
   } catch (e) {
-    m.reply(`Ocurrió un error: ${e.message}`)
+    m.reply(e.message)
   }
 }
 
 handler.help = ['fstik']
-handler.tags = ['tools']
 handler.command = ['fstik', 'stickersearch', 'stickerinfo']
+handler.tags = ['tools']
 
 export default handler
