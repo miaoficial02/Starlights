@@ -1,5 +1,5 @@
-const handler = async (m, { conn, isCreator, command }) => {
-  if (!isCreator) return m.reply('🚫 Este comando solo lo puede usar el dueño del bot.')
+const handler = async (m, { conn, command }) => {
+  if (!['50212345678@s.whatsapp.net'].includes(m.sender)) return m.reply('🚫 Este comando solo lo puede usar el dueño del bot.')
 
   try {
     await conn.chatModify(
@@ -15,6 +15,5 @@ const handler = async (m, { conn, isCreator, command }) => {
 }
 
 handler.command = ['limpiarchat', 'chadel', 'eliminarchat']
-handler.owner = true // Solo el owner puede usarlo
 
 export default handler
