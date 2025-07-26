@@ -2,36 +2,26 @@ import axios from 'axios';
 import baileys from '@whiskeysockets/baileys';
 
 async function sendAlbumMessage(jid, medias, options = {}) {
-  if (typeof jid !== "string") {
-    throw new TypeError(`jid must be string, received: ${jid} (${jid?.constructor?.name})`);
-  }
+  if (typeof jid !== "string") throw new TypeError(`😤 ¡Roxy dice que el JID tiene que ser texto!`);
+  if (medias.length < 2) throw new RangeError("💢 ¿Dos imágenes mínimo y me traes menos? Por favor...");
 
   for (const media of medias) {
-    if (!media.type || (media.type !== "image" && media.type !== "video")) {
-      throw new TypeError(`media.type must be "image" or "video", received: ${media.type} (${media.type?.constructor?.name})`);
-    }
-    if (!media.data || (!media.data.url && !Buffer.isBuffer(media.data))) {
-      throw new TypeError(`media.data must be object with url or buffer, received: ${media.data} (${media.data?.constructor?.name})`);
-    }
-  }
-
-  if (medias.length < 2) {
-    throw new RangeError("Minimum 2 media");
+    if (!['image', 'video'].includes(media.type))
+      throw new TypeError(`❌ Tipo inválido: ${media.type}`);
+    if (!media.data || (!media.data.url && !Buffer.isBuffer(media.data)))
+      throw new TypeError(`🌀 ¡Necesito datos válidos en las imágenes, cariño!`);
   }
 
   const caption = options.text || options.caption || "";
   const delay = !isNaN(options.delay) ? options.delay : 500;
-  delete options.text;
-  delete options.caption;
-  delete options.delay;
 
   const album = baileys.generateWAMessageFromContent(
     jid,
     {
       messageContextInfo: {},
       albumMessage: {
-        expectedImageCount: medias.filter(media => media.type === "image").length,
-        expectedVideoCount: medias.filter(media => media.type === "video").length,
+        expectedImageCount: medias.filter(m => m.type === "image").length,
+        expectedVideoCount: medias.filter(m => m.type === "video").length,
         ...(options.quoted
           ? {
               contextInfo: {
@@ -67,9 +57,9 @@ async function sendAlbumMessage(jid, medias, options = {}) {
   return album;
 }
 
-const pins = async (judul) => {
+const pins = async (query) => {
   try {
-    const res = await axios.get(`https://anime-xi-wheat.vercel.app/api/pinterest?q=${encodeURIComponent(judul)}`);
+    const res = await axios.get(`https://anime-xi-wheat.vercel.app/api/pinterest?q=${encodeURIComponent(query)}`);
     if (Array.isArray(res.data.images)) {
       return res.data.images.map(url => ({
         image_large_url: url,
@@ -78,46 +68,53 @@ const pins = async (judul) => {
       }));
     }
     return [];
-  } catch (error) {
-    console.error('Error:', error);
+  } catch (err) {
+    console.error('💥 Error fetching pins:', err);
     return [];
   }
 };
 
 let handler = async (m, { conn, text }) => {
-  if (!text) return conn.reply(m.chat, `${emojis} Ingresa un texto. Ejemplo: .pinterest ${botname}`, m, fake);
+  const dev = 'NeoTokyo Beats 💿';
+  const botname = 'Roxy-Bot 🔥';
 
+  if (!text) {
+    return conn.reply(m.chat, `💄 *¿Qué esperás, papi?* ¡Escribí lo que querés buscar!\n\n✨ *Ejemplo:* .pinterest anime girl`, m);
+  }
 
   try {
-    m.react('✨️');
+    await m.react('🔍');
     const results = await pins(text);
-    if (!results || results.length === 0) return conn.reply(m.chat, `No se encontraron resultados para "${text}".`, m, fake);
+    if (!results.length) return conn.reply(m.chat, `🙄 No encontré nada con *${text}*. Probá con otra cosa, nene.`, m);
 
-    const maxImages = Math.min(results.length, 15);
+    const max = Math.min(results.length, 15);
     const medias = [];
 
-    for (let i = 0; i < maxImages; i++) {
+    for (let i = 0; i < max; i++) {
       medias.push({
         type: 'image',
-        data: { url: results[i].image_large_url || results[i].image_medium_url || results[i].image_small_url }
+        data: {
+          url: results[i].image_large_url || results[i].image_medium_url || results[i].image_small_url
+        }
       });
     }
 
     await sendAlbumMessage(m.chat, medias, {
-      caption: `𝗥𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀 𝗱𝗲: ${text}\n𝗖𝗮𝗻𝘁𝗶𝗱𝗮𝗱 𝗱𝗲 𝗿𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀: 15\n𝗖𝗿𝗲𝗮𝗱𝗼𝗿: ${dev}`,
+      caption: `💋 *Roxy te trajo esto, mi amor:*\n📌 *Búsqueda:* ${text}\n🖼️ *Resultados:* ${max}\n🎀 *By:* ${dev}`,
       quoted: m
     });
 
-    await conn.sendMessage(m.chat, { react: { text: '🌸', key: m.key } });
+    await conn.sendMessage(m.chat, { react: { text: '🌹', key: m.key } });
 
-  } catch (error) {
-    conn.reply(m.chat, 'Error al obtener imágenes de Pinterest.', m, fake);
+  } catch (e) {
+    console.error(e);
+    return conn.reply(m.chat, '🤬 ¡Algo falló, mi cielo! Pinterest se hizo la difícil...', m);
   }
 };
 
 handler.help = ['pinterest'];
 handler.command = ['pinterest', 'pin'];
 handler.tags = ['buscador'];
-handler.register = true
+handler.register = true;
 
 export default handler;
