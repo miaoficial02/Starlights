@@ -75,7 +75,7 @@ const pins = async (query) => {
 };
 
 let handler = async (m, { conn, text }) => {
-  const dev = 'NeoTokyo Beats 💿';
+  const dev = 'Brayan 💫';
   const botname = 'Roxy-Bot 🔥';
 
   if (!text) {
@@ -100,7 +100,7 @@ let handler = async (m, { conn, text }) => {
     }
 
     await sendAlbumMessage(m.chat, medias, {
-      caption: `💋 *Roxy te trajo esto, mi amor:*\n📌 *Búsqueda:* ${text}\n🖼️ *Resultados:* ${max}\n🎀 *By:* Brayan 💫*`,
+      caption: `💋 *Roxy te trajo esto, mi amor:*\n📌 *Búsqueda:* ${text}\n🖼️ *Resultados:* ${max}\n🎀 *By:* ${dev}`,
       quoted: m
     });
 
