@@ -1,5 +1,5 @@
 const handler = async (m, { conn, command }) => {
-  if (!['50212345678@s.whatsapp.net'].includes(m.sender)) return m.reply('🚫 Este comando solo lo puede usar el dueño del bot.')
+  if (!['573001533523@s.whatsapp.net'].includes(m.sender)) return m.reply('🚫 Este comando solo lo puede usar el dueño del bot.')
 
   try {
     await conn.chatModify(
