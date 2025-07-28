@@ -31,7 +31,6 @@ m = smsg(this, m) || m
 if (!m)
 return
 m.exp = 0
-m.coin = false
 try {
 let user = global.db.data.users[m.sender]
 if (typeof user !== 'object')
@@ -40,8 +39,6 @@ global.db.data.users[m.sender] = {}
 if (user) {
 if (!isNumber(user.exp))
 user.exp = 0
-if (!isNumber(user.coin))
-user.coin = 10
 if (!isNumber(user.joincount))
 user.joincount = 1
 if (!isNumber(user.diamond))
@@ -104,8 +101,6 @@ if (!('banned' in user))
 user.banned = false
 if (!('useDocument' in user))
 user.useDocument = false
-if (!isNumber(user.level))
-user.level = 0
 if (!isNumber(user.bank))
 user.bank = 0
 if (!isNumber(user.warn))
@@ -113,7 +108,6 @@ user.warn = 0
 } else
                 global.db.data.users[m.sender] = {
 exp: 0,
-coin: 10,
 joincount: 1,
 diamond: 3,
 lastadventure: 0,
@@ -141,7 +135,6 @@ afkReason: '',
 banned: false,
 useDocument: false,
 bank: 0,
-level: 0,
 role: 'Nuv',
 premium: false,
 premiumTime: 0,                 
@@ -156,8 +149,6 @@ if (!('sAutoresponder' in chat))
 chat.sAutoresponder = ''
 if (!('welcome' in chat))
 chat.welcome = false
-if (!('autolevelup' in chat))
-chat.autolevelup = false
 if (!('autoAceptar' in chat))
 chat.autoAceptar = false
 if (!('autosticker' in chat))
@@ -188,6 +179,8 @@ if (!('antifake' in chat))
 chat.antifake = false
 if (!('delete' in chat))
 chat.delete = false
+if (!('antiarabes' in chat))
+chat.antiarabes = false
 if (!isNumber(chat.expired))
 chat.expired = 0
 } else
@@ -195,7 +188,6 @@ global.db.data.chats[m.chat] = {
 isBanned: false,
 sAutoresponder: '',
 welcome: false,
-autolevelup: false,
 autoresponder: false,
 delete: false,
 autoAceptar: false,
@@ -208,6 +200,7 @@ antiBot2: false,
 modoadmin: false,
 antiLink: true,
 antifake: false,
+antiarabes: false,
 reaction: false,
 nsfw: false,
 expired: 0,
@@ -268,24 +261,18 @@ m.exp += Math.ceil(Math.random() * 10)
 
 let usedPrefix
 
-async function getLidFromJid(id, conn) {
-if (id.endsWith('@lid')) return id
-const res = await conn.onWhatsApp(id).catch(() => [])
-return res[0]?.lid || id
+const groupMetadata = (m.isGroup ? ((conn.chats[m.chat] || {}).metadata || await this.groupMetadata(m.chat).catch(_ => null)) : {}) || {}
+const participants = (m.isGroup ? groupMetadata.participants : []) || []
+let numBot = false
+if (conn.user && conn.user.lid) {
+  numBot = conn.user.lid.replace(/:.*/, '')
 }
-const senderLid = await getLidFromJid(m.sender, conn)
-const botLid = await getLidFromJid(conn.user.jid, conn)
-const senderJid = m.sender
-const botJid = conn.user.jid
-const groupMetadata = m.isGroup ? ((conn.chats[m.chat] || {}).metadata || await this.groupMetadata(m.chat).catch(_ => null)) : {}
-const participants = m.isGroup ? (groupMetadata.participants || []) : []
-const user = participants.find(p => p.id === senderLid || p.id === senderJid) || {}
-const bot = participants.find(p => p.id === botLid || p.id === botJid) || {}
-const isRAdmin = user?.admin === "superadmin"
-const isAdmin = isRAdmin || user?.admin === "admin"
-const isBotAdmin = !!bot?.admin
-
-
+const detectwhat2 = m.sender.includes('@lid') ? `${numBot}@lid` : conn.user.jid
+const user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {}
+const bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == detectwhat2) : {}) || {}
+const isRAdmin = user?.admin == 'superadmin' || false
+const isAdmin = isRAdmin || user?.admin == 'admin' || false //user admins? 
+const isBotAdmin = bot?.admin || false //Detecta sin el bot es admin
 m.isWABusiness = global.conn.authState?.creds?.platform === 'smba' || global.conn.authState?.creds?.platform === 'smbi'
 m.isChannel = m.chat.includes('@newsletter') || m.sender.includes('@newsletter')
 
@@ -433,10 +420,6 @@ continue
 fail('admin', m, this)
 continue
 }
-if (plugin.register == true && _user.registered == false) { 
-fail('unreg', m, this)
-continue
-}
 if (plugin.private && m.isGroup) {
 fail('private', m, this)
 continue
@@ -549,7 +532,7 @@ console.log(m, m.quoted, e)}
 let settingsREAD = global.db.data.settings[this.user.jid] || {}  
 if (opts['autoread']) await this.readMessages([m.key])
 
-if (db.data.chats[m.chat].reaction && m.text.match(/(ción|dad|aje|oso|izar|mente|pero|tion|age|ous|ate|and|but|ify|ai|Pikachu|a|s)/gi)) {
+if (db.data.chats[m.chat].reaction && m.text.match(/(ción|dad|aje|oso|izar|mente|pero|tion|age|ous|ate|and|but|ify|ai|Roxy|a|s)/gi)) {
 let emot = pickRandom(["🍟", "😃", "😄", "😁", "😆", "🍓", "😅", "😂", "🤣", "🥲", "☺️", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "🌺", "🌸", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🌟", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "💫", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😶‍🌫️", "😱", "😨", "😰", "😥", "😓", "🤗", "🤔", "🫣", "🤭", "🤖", "🍭", "🤫", "🫠", "🤥", "😶", "📇", "😐", "💧", "😑", "🫨", "😬", "🙄", "😯", "😦", "😧", "😮", "😲", "🥱", "😴", "🤤", "😪", "😮‍💨", "😵", "😵‍💫", "🤐", "🥴", "🤢", "🤮", "🤧", "😷", "🤒", "🤕", "🤑", "🤠", "😈", "👿", "👺", "🧿", "🌩", "👻", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾", "🫶", "👍", "✌️", "🙏", "🫵", "🤏", "🤌", "☝️", "🖕", "🙏", "🫵", "🫂", "🐱", "🤹‍♀️", "🤹‍♂️", "🗿", "✨", "⚡", "🔥", "🌈", "🩷", "❤️", "🧡", "💛", "💚", "🩵", "💙", "💜", "🖤", "🩶", "🤍", "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "🚩", "👊", "⚡️", "💋", "🫰", "💅", "👑", "🐣", "🐤", "🐈"])
 if (!m.fromMe) return this.sendMessage(m.chat, { react: { text: emot, key: m.key }})
 }
@@ -557,17 +540,7 @@ function pickRandom(list) { return list[Math.floor(Math.random() * list.length)]
 }}
 
 global.dfail = (type, m, conn, comando = '') => {
-  let edadaleatoria = ['10', '28', '20', '40', '18', '21', '15', '11', '9', '17', '25'].getRandom();
-  let user2 = m.pushName || 'Anónimo';
-  let verifyaleatorio = ['registrar', 'reg', 'verificar', 'verify', 'register'].getRandom();
-  let edades = Array.from({ length: 3 }, () => ['10', '28', '20', '40', '18', '21', '15', '11', '9', '17', '25'].getRandom());
-
-  let mensajes = getMensajeSistema({
-    comando,
-    verifyaleatorio,
-    user2,
-    edades
-  });
+  let mensajes = getMensajeSistema(comando)
 
   const msg = {
     rowner: mensajes.smsrowner,
@@ -578,9 +551,8 @@ global.dfail = (type, m, conn, comando = '') => {
     private: mensajes.smsprivate,
     admin: mensajes.smsadmin,
     botAdmin: mensajes.smsbotAdmin,
-    unreg: mensajes.smsunreg,
     restrict: mensajes.smsrestrict
-  }[type];
+  }[type]
 
   if (msg) return conn.reply(m.chat, msg, m, rcanal).then(_ => m.react('✖️'))
 }
