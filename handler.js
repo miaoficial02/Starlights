@@ -551,6 +551,7 @@ global.dfail = (type, m, conn, comando = '') => {
     private: mensajes.smsprivate,
     admin: mensajes.smsadmin,
     botAdmin: mensajes.smsbotAdmin,
+    unreg: mensajes.smsunreg,
     restrict: mensajes.smsrestrict
   }[type]
 
