@@ -7,7 +7,7 @@ const handler = async (m, { conn, text }) => {
             return;
         }
 
-        const response = await axios.get(`https://api.siputzx.my.id/api/s/pinterest?query=${encodeURIComponent(text)}`);
+        const response = await axios.get(`https://anime-xi-wheat.vercel.app/api/pinterest?q=${encodeURIComponent(query)}`);
         const data = response.data.data;
 
         if (data.length === 0) {
