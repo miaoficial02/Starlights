@@ -1,120 +1,72 @@
 import axios from 'axios';
-import baileys from '@whiskeysockets/baileys';
+const {
+  generateWAMessageContent,
+  generateWAMessageFromContent,
+  proto
+} = (await import("@whiskeysockets/baileys"))["default"];
 
-async function sendAlbumMessage(jid, medias, options = {}) {
-  if (typeof jid !== "string") throw new TypeError(`😤 ¡Roxy dice que el JID tiene que ser texto!`);
-  if (medias.length < 2) throw new RangeError("💢 ¿Dos imágenes mínimo y me traes menos? Por favor...");
-
-  for (const media of medias) {
-    if (!['image', 'video'].includes(media.type))
-      throw new TypeError(`❌ Tipo inválido: ${media.type}`);
-    if (!media.data || (!media.data.url && !Buffer.isBuffer(media.data)))
-      throw new TypeError(`🌀 ¡Necesito datos válidos en las imágenes, cariño!`);
-  }
-
-  const caption = options.text || options.caption || "";
-  const delay = !isNaN(options.delay) ? options.delay : 500;
-
-  const album = baileys.generateWAMessageFromContent(
-    jid,
-    {
-      messageContextInfo: {},
-      albumMessage: {
-        expectedImageCount: medias.filter(m => m.type === "image").length,
-        expectedVideoCount: medias.filter(m => m.type === "video").length,
-        ...(options.quoted
-          ? {
-              contextInfo: {
-                remoteJid: options.quoted.key.remoteJid,
-                fromMe: options.quoted.key.fromMe,
-                stanzaId: options.quoted.key.id,
-                participant: options.quoted.key.participant || options.quoted.key.remoteJid,
-                quotedMessage: options.quoted.message,
-              },
-            }
-          : {}),
-      },
-    },
-    {}
-  );
-
-  await conn.relayMessage(album.key.remoteJid, album.message, { messageId: album.key.id });
-
-  for (let i = 0; i < medias.length; i++) {
-    const { type, data } = medias[i];
-    const img = await baileys.generateWAMessage(
-      album.key.remoteJid,
-      { [type]: data, ...(i === 0 ? { caption } : {}) },
-      { upload: conn.waUploadToServer }
-    );
-    img.message.messageContextInfo = {
-      messageAssociation: { associationType: 1, parentMessageKey: album.key },
-    };
-    await conn.relayMessage(img.key.remoteJid, img.message, { messageId: img.key.id });
-    await baileys.delay(delay);
-  }
-
-  return album;
-}
-
-const pins = async (query) => {
-  try {
-    const res = await axios.get(`https://anime-xi-wheat.vercel.app/api/pinterest?q=${encodeURIComponent(query)}`);
-    if (Array.isArray(res.data.images)) {
-      return res.data.images.map(url => ({
-        image_large_url: url,
-        image_medium_url: url,
-        image_small_url: url
-      }));
-    }
-    return [];
-  } catch (err) {
-    console.error('💥 Error fetching pins:', err);
-    return [];
-  }
-};
-
-let handler = async (m, { conn, text }) => {
-  const dev = 'Brayan 💫';
-  const botname = 'Roxy-Bot 🔥';
-
+let handler = async (m, { conn, text, usedPrefix, command }) => {
   if (!text) {
-    return conn.reply(m.chat, `💄 *¿Qué esperás, papi?* ¡Escribí lo que querés buscar!\n\n✨ *Ejemplo:* .pinterest anime girl`, m);
+    return conn.reply(m.chat, `💋 *¿Y qué querés que busque si no pones nada, bebé?*\nEscribe algo, no soy adivina 😒\n\n📌 *Ejemplo:* \`${usedPrefix + command} anime aesthetic\``, m);
   }
 
+  let query = text + ' hd';
+  await m.react("💅");
+  conn.reply(m.chat, '🖤 *Cierra el pico un rato...* estoy buscando tus imágenes 🔍✨', m);
+
   try {
-    await m.react('🔍');
-    const results = await pins(text);
-    if (!results.length) return conn.reply(m.chat, `🙄 No encontré nada con *${text}*. Probá con otra cosa, nene.`, m);
+    let { data } = await axios.get(`https://api.dorratz.com/v2/pinterest?q=${encodeURIComponent(query)}`);
+    let images = data.slice(0, 6).map(item => item.image_large_url);
 
-    const max = Math.min(results.length, 15);
-    const medias = [];
+    if (!images.length) throw 'No encontré nada, mi rey. Busca mejor.';
 
-    for (let i = 0; i < max; i++) {
-      medias.push({
-        type: 'image',
-        data: {
-          url: results[i].image_large_url || results[i].image_medium_url || results[i].image_small_url
-        }
+    let cards = [];
+    let count = 1;
+
+    for (let url of images) {
+      const { imageMessage } = await generateWAMessageContent({ image: { url } }, { upload: conn.waUploadToServer });
+      cards.push({
+        body: proto.Message.InteractiveMessage.Body.fromObject({ text: `🖼️ Imagen sexy #${count++}` }),
+        footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "🌸 Pinterest HD" }),
+        header: proto.Message.InteractiveMessage.Header.fromObject({ title: '', hasMediaAttachment: true, imageMessage }),
+        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+          buttons: [{
+            name: "cta_url",
+            buttonParamsJson: JSON.stringify({
+              display_text: "✨ Ver en Pinterest",
+              Url: `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`,
+              merchant_url: `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`
+            })
+          }]
+        })
       });
     }
 
-    await sendAlbumMessage(m.chat, medias, {
-      caption: `💋 *Roxy te trajo esto, mi amor:*\n📌 *Búsqueda:* ${text}\n🖼️ *Resultados:* ${max}\n🎀 *By:* ${dev}`,
-      quoted: m
-    });
+    const messageContent = generateWAMessageFromContent(m.chat, {
+      viewOnceMessage: {
+        message: {
+          messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
+          interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+            body: proto.Message.InteractiveMessage.Body.create({ text: `📂 *Resultados bien coquetos de:* ${query}` }),
+            footer: proto.Message.InteractiveMessage.Footer.create({ text: "🔞 Pinterest HD - Powered by Hinata-Bot 💋" }),
+            header: proto.Message.InteractiveMessage.Header.create({ hasMediaAttachment: false }),
+            carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({ cards })
+          })
+        }
+      }
+    }, { quoted: m });
 
-    await conn.sendMessage(m.chat, { react: { text: '🌹', key: m.key } });
+    await m.react("✅");
+    await conn.relayMessage(m.chat, messageContent.message, { messageId: messageContent.key.id });
 
-  } catch (e) {
-    console.error(e);
-    return conn.reply(m.chat, '🤬 ¡Algo falló, mi cielo! Pinterest se hizo la difícil...', m);
+  } catch (err) {
+    console.error(err);
+    return conn.reply(m.chat, "😒 Algo salió mal, reina... ni modo. Intenta con otra cosa.", m);
   }
 };
 
-handler.help = ['pinterest'];
+handler.help = ["pinterest"];
+handler.tags = ["descargas"];
 handler.command = ['pinterest', 'pin'];
-handler.tags = ['buscador'];
-handler.register = true;
 
 export default handler;
