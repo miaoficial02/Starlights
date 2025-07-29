@@ -14,7 +14,7 @@ export const handler = {
       if (!owner) return;
 
       // Calcular fecha y hora
-      const ahora = moment().tz('America/Bogota'); // Cambia la zona si estás en otro país
+      const ahora = moment().tz('America/Argentina'); // Cambia la zona si estás en otro país
       const fechaHora = ahora.format('DD/MM/YYYY - HH:mm:ss');
 
       // Prueba de latencia
