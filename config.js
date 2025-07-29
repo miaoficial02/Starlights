@@ -11,10 +11,8 @@ import moment from 'moment-timezone'
 
 // ᑕOᒪᗩᗷOᖇᗩᗪOᖇᗴՏ Y ᑕᖇᗴáᗪOᖇ 🌸
 global.owner = [
-['50231458537', '🐔 Creador Batman', true],
+['573001533523', '🐔 Creador Batman', true],
 ['15614809253', 'David RyZe', true],
-['573001533523', 'BʀᴀʏᴀɴXD', true],
-['50248019799', '🐉𝙉𝙚𝙤𝙏𝙤𝙠𝙮𝙤 𝘽𝙚𝙖𝙩𝙨🐲', true],
 ['573133374132', 'Yᴏ Sᴏʏ Yᴏ', true],
 ['18493907272', 'Dani Pana Del Brayan', true],
 ];
