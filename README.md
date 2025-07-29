@@ -1,19 +1,19 @@
-<h1 align="center">🌸 Roxy MD - WhatsApp Bot 🌸</h1>
+<h1 align="center">💫𝐒𝐭𝐚𝐫𝐥𝐢𝐠𝐡𝐭𝐬 - 𝐌𝐃💫</h1>
 
 <p align="center">
   <img src="https://o.uguu.se/ZjztDbCU.gif" width="220" alt="RoxyBot" />
 </p>
 
 <p align="center">
-  💖 Bienvenido a *Roxy MD*, un bot de WhatsApp multifuncional con estilo cute, elegante y con comandos únicos.  
+  💖 Bienvenido a Starlights, un bot de WhatsApp multifuncional con estilo cute, elegante y con comandos únicos.  
   Diseñado para entretener, ayudar y sorprender a tus usuarios.  
 </p>
 
 ---
 
-## 📌 ¿Qué es Roxy MD?
+## 📌 ¿Qué es Starlights?
 
-Roxy MD es un bot para WhatsApp que puedes usar en grupos o chats privados.  
+Starlights es un bot para WhatsApp que puedes usar en grupos o chats privados.  
 Incluye funciones avanzadas como:  
 - Respuestas de IA
 - Registro de usuarios
