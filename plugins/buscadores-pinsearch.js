@@ -1,72 +1,55 @@
 import axios from 'axios';
-const {
-  generateWAMessageContent,
-  generateWAMessageFromContent,
-  proto
-} = (await import("@whiskeysockets/baileys"))["default"];
 
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) {
-    return conn.reply(m.chat, `💋 *¿Y qué querés que busque si no pones nada, bebé?*\nEscribe algo, no soy adivina 😒\n\n📌 *Ejemplo:* \`${usedPrefix + command} anime aesthetic\``, m);
-  }
-
-  let query = text + ' hd';
-  await m.react("💅");
-  conn.reply(m.chat, '🖤 *Cierra el pico un rato...* estoy buscando tus imágenes 🔍✨', m);
-
-  try {
-    let { data } = await axios.get(`https://api.dorratz.com/v2/pinterest?q=${encodeURIComponent(query)}`);
-    let images = data.slice(0, 6).map(item => item.image_large_url);
-
-    if (!images.length) throw 'No encontré nada, mi rey. Busca mejor.';
-
-    let cards = [];
-    let count = 1;
-
-    for (let url of images) {
-      const { imageMessage } = await generateWAMessageContent({ image: { url } }, { upload: conn.waUploadToServer });
-      cards.push({
-        body: proto.Message.InteractiveMessage.Body.fromObject({ text: `🖼️ Imagen sexy #${count++}` }),
-        footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "🌸 Pinterest HD" }),
-        header: proto.Message.InteractiveMessage.Header.fromObject({ title: '', hasMediaAttachment: true, imageMessage }),
-        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
-          buttons: [{
-            name: "cta_url",
-            buttonParamsJson: JSON.stringify({
-              display_text: "✨ Ver en Pinterest",
-              Url: `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`,
-              merchant_url: `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`
-            })
-          }]
-        })
-      });
-    }
-
-    const messageContent = generateWAMessageFromContent(m.chat, {
-      viewOnceMessage: {
-        message: {
-          messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
-          interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-            body: proto.Message.InteractiveMessage.Body.create({ text: `📂 *Resultados bien coquetos de:* ${query}` }),
-            footer: proto.Message.InteractiveMessage.Footer.create({ text: "🔞 Pinterest HD - Powered by Hinata-Bot 💋" }),
-            header: proto.Message.InteractiveMessage.Header.create({ hasMediaAttachment: false }),
-            carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({ cards })
-          })
+const handler = async (m, { conn, text }) => {
+    try {
+        if (!text) {
+            await conn.sendMessage(m.chat, { text: '🚩 Por favor proporciona un término de búsqueda.' }, { quoted: m, rcanal });
+            return;
         }
-      }
-    }, { quoted: m });
 
-    await m.react("✅");
-    await conn.relayMessage(m.chat, messageContent.message, { messageId: messageContent.key.id });
+        const response = await axios.get(`https://api.siputzx.my.id/api/s/pinterest?query=${encodeURIComponent(text)}`);
+        const data = response.data.data;
 
-  } catch (err) {
-    console.error(err);
-    return conn.reply(m.chat, "😒 Algo salió mal, reina... ni modo. Intenta con otra cosa.", m);
-  }
+        if (data.length === 0) {
+            await conn.sendMessage(m.chat, { text: `❌ No se encontraron imágenes para "${text}".` }, { quoted: m });
+            return;
+        }
+
+        const randomImage = data[Math.floor(Math.random() * data.length)];
+        const imageUrl = randomImage.images_url;
+        const title = randomImage.grid_title || `¡Aquí tienes una imagen de ${text}!`;
+
+        await m.react('🕓');
+
+        await conn.sendMessage(
+            m.chat,
+            { 
+                image: { url: imageUrl },
+                caption: `\t\t🚩 *${title}*\n ${global.dev}`,
+                buttons: [
+                    { 
+                        buttonId: `.pinterest ${text}`, 
+                        buttonText: { displayText: 'Siguiente 🔍' },
+                        type: 1  
+                    }
+                ],
+                viewOnce: true,
+                headerType: 4
+            },
+            { quoted: m }
+        );
+
+        await m.react('✅');
+    } catch (error) {
+        await m.react('✖️');
+        console.error('Error al obtener la imagen:', error);
+        await conn.sendMessage(m.chat, { text: '❌ Ocurrió un error al intentar obtener la imagen. Inténtalo nuevamente.' }, { quoted: m });
+    }
 };
 
-handler.help = ["pinterest"];
-handler.tags = ["descargas"];
-handler.command = ['pinterest', 'pin'];
+handler.help = ['pinterest <término>'];
+handler.tags = ['img'];
+handler.register = true;
+handler.command = /^(pinterest|pinterestsearch)$/i;
 
 export default handler;
