@@ -32,27 +32,27 @@ global.prems = []
 global.libreria = 'Baileys'
 global.baileys = 'V 6.7.17' 
 global.vs = '2.2.5'
-global.nameqr = 'sᥙmі-ᑲ᥆𝗍-MD'
-global.namebot = '✿𝑆𝑈𝑀𝐼 𝑆𝐴𝐾𝑈𝑅𝐴𝑆𝐴𝑊𝐴✿'
+global.nameqr = 'Starlights'
+global.namebot = '★ 𝑺𝑻𝑨𝑹𝑳𝑰𝑮𝑯𝑻𝑺 ★'
 global.sessions = 'Sessions'
 global.jadi = 'JadiBots' 
 global.yukiJadibts = true
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.packname = '✿𝑆𝑈𝑀𝐼 𝑆𝐴𝐾𝑈𝑅𝐴𝑆𝐴𝑊𝐴✿'
-global.botname = '𝑆𝑈𝑀𝐼 𝑆𝐴𝐾𝑈𝑅𝐴𝑆𝐴𝑊𝐴'
-global.wm = '✿𝑆𝑈𝑀𝐼 𝑆𝐴𝐾𝑈𝑅𝐴𝑆𝐴𝑊𝐴✿'
+global.packname = '★ 𝑺𝑻𝑨𝑹𝑳𝑰𝑮𝑯𝑻𝑺 ★'
+global.botname = '★ 𝑺𝑻𝑨𝑹𝑳𝑰𝑮𝑯𝑻𝑺 ★'
+global.wm = '★ 𝑺𝑻𝑨𝑹𝑳𝑰𝑮𝑯𝑻𝑺 ★'
 global.author = '© mᥲძᥱ ᥕі𝗍һ ᑲᥡ і𝗍s.mіᥲ.᥆𝖿іᥴіᥲᥣ'
 global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ і𝗍s.mіᥲ.᥆𝖿іᥴіᥲᥣ'
-global.textbot = 'sᥙmі, mᥲძᥱ ᥕі𝗍һ ᑲᥡ і𝗍s.mіᥲ.᥆𝖿іᥴіᥲᥣ'
+global.textbot = 's𝗍ᥲr, mᥲძᥱ ᥕі𝗍һ ᑲᥡ і𝗍s.mіᥲ.᥆𝖿іᥴіᥲᥣ'
 global.etiqueta = 'і𝗍s.mіᥲ.᥆𝖿іᥴіᥲᥣ'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.moneda = '¥enes'
-global.welcom1 = '✿ Edita Con El Comando #setwelcome'
-global.welcom2 = '✿ Edita Con El Comando #setbye'
+global.welcom1 = '★ Edita Con El Comando #setwelcome'
+global.welcom2 = '★ Edita Con El Comando #setbye'
 global.banner = 'https://files.catbox.moe/s5i7y0.png'
 global.avatar = 'https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1742678797993.jpeg'
 
