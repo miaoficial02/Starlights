@@ -4,13 +4,13 @@ const handler = async (m, {conn, participants, groupMetadata}) => {
   const groupAdmins = participants.filter((p) => p.admin)
   const listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n')
   const owner = groupMetadata.owner || groupAdmins.find((p) => p.admin === 'superadmin')?.id || m.chat.split`-`[0] + '@s.whatsapp.net'
-  const text = `*✧･ﾟ *INFO GRUPO* ﾟ･✧*
-🌸 *Owner del bot:* its.mia.oficial
-🌸 *ID:* ${groupMetadata.id}
-🌸 *Nombre:* ${groupMetadata.subject}
-🌸 *Miembros:* ${participants.length} Participantes
-🌸 *Creador:* @${owner.split('@')[0]}
-🌸 *Administradores:*
+  const text = `*💫 𝕀ℕ𝔽𝕆 𝔻𝔼𝕃 𝔾ℝ𝕌ℙ𝕆 💫*
+「⭐」 *Owner del bot:* its.mia.oficial
+「🔗」 *ID:* ${groupMetadata.id}
+「🌐」 *Nombre:* ${groupMetadata.subject}
+「👥」 *Miembros:* ${participants.length} Participantes
+「👑」 *Creador:* @${owner.split('@')[0]}
+「🔰」 *Administradores:*
 ${listAdmin}
 
 ˚₊· ͟͟͞͞➳❥ *CONFIGURACIÓN*
