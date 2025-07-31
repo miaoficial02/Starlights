@@ -4,8 +4,12 @@
     </p>
     
 > [!IMPORTANT]
-> **Este proyecto aún está en desarrollo.♡
-> el proyecto está en constante evalucion por lo tanto el bot aún no funcionará hasta que el proyectó este terminado.**
+> **⚠️ Aclaración Importante ⚠️  
+Este bot no tiene ninguna relación, afiliación ni conexión con el grupo llamado “Starlights Team”.  
+Cualquier similitud en nombre o estilo es pura coincidencia. El desarrollo, mantenimiento y control de este bot es totalmente independiente.**
+
+**📌 Este proyecto no pertenece a Starlights Team ni representa a dicha organización en ninguna forma.**
+
 ### **`❕️ Información importante`**
 
 <details>
