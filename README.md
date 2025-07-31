@@ -1,6 +1,6 @@
 <h1 align="center"> ★𝐒𝐓𝐀𝐑𝐋𝐈𝐆𝐇𝐓𝐒★ </h1>
 
- <img src= "https://files.catbox.moe/km1exh.jpg">
+ <img src= "https://files.catbox.moe/sklz18.png">
     </p>
     
 > [!IMPORTANT]
