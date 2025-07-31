@@ -1,4 +1,4 @@
-<h1 align="center"> **Powered by Mia** </h1>
+<h1 align="center">**`Powered by Mia`**</h1>
 
  <img src= "https://files.catbox.moe/sklz18.png">
     </p>
