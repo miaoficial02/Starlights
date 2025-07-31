@@ -6,7 +6,7 @@ const youtubeRegexID = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-z
 const handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
     if (!text.trim()) {
-      return conn.reply(m.chat, `❀ Por favor, ingresa el nombre de la música a descargar.`, m)
+      return conn.reply(m.chat, `「⭐」 Por favor, ingresa el nombre de la música a descargar.`, m)
     }
   
 let videoIdToFind = text.match(youtubeRegexID) || null
@@ -30,7 +30,7 @@ url = url || 'no encontrado'
 author = author || 'no encontrado'
     const vistas = formatViews(views)
     const canal = author.name ? author.name : 'Desconocido'
-    const infoMessage = `「✦」Descargando *<${title || 'Desconocido'}>*\n\n> ✧ Canal » *${canal}*\n> ✰ Vistas » *${vistas || 'Desconocido'}*\n> ⴵ Duración » *${timestamp || 'Desconocido'}*\n> ✐ Publicado » *${ago || 'Desconocido'}*\n> 🜸 Link » ${url}`
+    const infoMessage = `「⭐」Descargando *<${title || 'Desconocido'}>*\n\n> ⭐ Canal » *${canal}*\n> 👥 Vistas » *${vistas || 'Desconocido'}*\n> ⏳ Duración » *${timestamp || 'Desconocido'}*\n> 👤 Publicado » *${ago || 'Desconocido'}*\n> 🔗 Link » ${url}`
     const thumb = (await conn.getFile(thumbnail))?.data
     const JT = {
       contextInfo: {
