@@ -1,4 +1,4 @@
-<h1 align="center">**`Powered by Mia`**</h1>
+<h1 align="center">★ 𝐒𝐓𝐀𝐑𝐋𝐈𝐆𝐇𝐓𝐒 ★</h1>
 
  <img src= "https://files.catbox.moe/sklz18.png">
     </p>
