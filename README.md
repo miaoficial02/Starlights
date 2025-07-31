@@ -61,7 +61,7 @@ apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
 
 ```bash
-git clone https://github.com/miaoficial02/Starlihgts && cd Starlihgts
+git clone https://github.com/miaoficial02/Starlights && cd Starlights
 ```
 
 ```bash
@@ -89,7 +89,7 @@ npm start
 ★ Abre Termux y navega al directorio del bot:
    
    ```bash
-    cd Starlihgts
+    cd Starlights
    ```
 
 ★ Inicia el bot nuevamente:
@@ -103,7 +103,7 @@ npm start
 > Si después de instalar el bot en Termux y iniciar la session del bot (deseas poner tu número es la lista de owner pon este comando:
 
    ```bash
-    cd Starlihgts && nano settings.js
+    cd Starlights && nano settings.js
    ```
 
 </details>
