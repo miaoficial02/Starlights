@@ -53,7 +53,7 @@ global.etiqueta = 'і𝗍s.mіᥲ.᥆𝖿іᥴіᥲᥣ'
 global.moneda = '¥enes'
 global.welcom1 = '✿ Edita Con El Comando #setwelcome'
 global.welcom2 = '✿ Edita Con El Comando #setbye'
-global.banner = 'https://files.catbox.moe/vornn1.jpg'
+global.banner = 'https://files.catbox.moe/s5i7y0.png'
 global.avatar = 'https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1742678797993.jpeg'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
