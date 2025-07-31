@@ -2,7 +2,10 @@
 
  <img src= "https://files.catbox.moe/km1exh.jpg">
     </p>
-
+    
+> [!IMPORTANT]
+> **Este proyecto aún está en desarrollo.♡
+> el proyecto está en constante evalucion por lo tanto el bot aún no funcionará hasta que el proyectó este terminado.**
 ### **`❕️ Información importante`**
 
 <details>
