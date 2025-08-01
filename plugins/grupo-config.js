@@ -1,6 +1,6 @@
 const handler = async (m, { conn, command, participants }) => {
   if (!m.isGroup) {
-    return m.reply('Este comando solo puede usarse en grupos.');
+    return m.reply('「⭐」Este comando solo puede usarse en grupos.');
   }
 
   const botAdmin = await conn.groupMetadata(m.chat).then(res => 
@@ -8,7 +8,7 @@ const handler = async (m, { conn, command, participants }) => {
   );
 
   if (!botAdmin) {
-    return m.reply('Necesito ser administrador para ejecutar este comando.');
+    return m.reply('「⭐」Necesito ser administrador para ejecutar este comando.');
   }
 
   const action = command === 'open' ? 'not_announcement' : 'announcement';
