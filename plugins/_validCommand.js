@@ -29,5 +29,5 @@ user.commands = 0
 user.commands += 1
 } else {
 const comando = m.text.trim().split(' ')[0]
-await m.reply(`《⭐》El comando *${comando}* no existe.\nPara ver la lista de comandos usa:\n» *#help*`)
+await m.reply(`《⭐》Hola Amigo el comando *${comando}* no existe.\nPuedes ver mi lista de comandos disponibles usando:\n» *#help*`)
 }}
