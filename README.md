@@ -58,11 +58,11 @@ termux-setup-storage
 ```
 
 ```bash
-git clone https://github.com/El-brayan502/RoxyBot-MD
+git clone https://github.com/miaoficial02/Starlights
 
 ```
 ```bash
-cd RoxyBot-MD
+cd Starlights
 ```
 ```bash
 npm install
