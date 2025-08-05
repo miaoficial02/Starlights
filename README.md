@@ -56,7 +56,9 @@ Abre tu terminal y ejecuta:
 termux-setup-storage
 
 ```
-
+```bash
+apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
+```
 ```bash
 git clone https://github.com/miaoficial02/Starlights
 
